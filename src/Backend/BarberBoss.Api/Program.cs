@@ -1,6 +1,9 @@
 using BarberBoss.Infrastructure;
 using BarberBoss.Application;
 using BarberBoss.Api.Filters;
+using BarberBoss.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using BarberBoss.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +28,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+if(!builder.Configuration.IsTestEnvironment())
+{
+    ApplyMigrations(app.Services);
+}
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -32,3 +40,16 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+static void ApplyMigrations(IServiceProvider serviceProvider)
+{
+    var scope = serviceProvider.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<BarberBossDbContext>();
+
+    if (context.Database.GetPendingMigrations().Any())
+    {
+        context.Database.Migrate();
+    }
+}
+
+public partial class Program { }
