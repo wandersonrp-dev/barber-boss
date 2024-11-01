@@ -159,4 +159,7 @@
   <data name="REQUIRED_PHONE_CONTACT" xml:space="preserve">
     <value>Contato de telefone é obrigatório</value>
   </data>
+  <data name="REQUIRED_EMAIL" xml:space="preserve">
+    <value>E-mail é obrigatório</value>
+  </data>
 </root>

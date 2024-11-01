@@ -7,19 +7,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DA0C6D6E-D68
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{8D712A8A-E352-458B-9909-651B3DC24085}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarberBoss.Api", "src\Backend\BarberBoss.Api\BarberBoss.Api.csproj", "{5F9C5A08-5CC1-42C1-A1E3-1C15695DA0BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarberBoss.Api", "src\Backend\BarberBoss.Api\BarberBoss.Api.csproj", "{5F9C5A08-5CC1-42C1-A1E3-1C15695DA0BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarberBoss.Application", "src\Backend\BarberBoss.Application\BarberBoss.Application.csproj", "{8F39635C-2CFD-49C9-B6A7-0485E0943ED8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarberBoss.Application", "src\Backend\BarberBoss.Application\BarberBoss.Application.csproj", "{8F39635C-2CFD-49C9-B6A7-0485E0943ED8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarberBoss.Domain", "src\Backend\BarberBoss.Domain\BarberBoss.Domain.csproj", "{CD541E80-0209-4094-BE2D-D8C19F7BAB1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarberBoss.Domain", "src\Backend\BarberBoss.Domain\BarberBoss.Domain.csproj", "{CD541E80-0209-4094-BE2D-D8C19F7BAB1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarberBoss.Infrastructure", "src\Backend\BarberBoss.Infrastructure\BarberBoss.Infrastructure.csproj", "{498BDBC1-308E-443F-895A-77ECF29E02AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarberBoss.Infrastructure", "src\Backend\BarberBoss.Infrastructure\BarberBoss.Infrastructure.csproj", "{498BDBC1-308E-443F-895A-77ECF29E02AF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C24C8093-9111-49CB-A508-27B2F7032B02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarberBoss.Communication", "src\Shared\BarberBoss.Communication\BarberBoss.Communication.csproj", "{C896D17C-0AFE-41C9-97F1-F40BE6BB989B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarberBoss.Communication", "src\Shared\BarberBoss.Communication\BarberBoss.Communication.csproj", "{C896D17C-0AFE-41C9-97F1-F40BE6BB989B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarberBoss.Exception", "src\Shared\BarberBoss.Exception\BarberBoss.Exception.csproj", "{62195424-D339-421D-8103-0AB91469220E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarberBoss.Exception", "src\Shared\BarberBoss.Exception\BarberBoss.Exception.csproj", "{62195424-D339-421D-8103-0AB91469220E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5D6213A7-FD48-4AA2-8A5C-A9180DAA1AD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Tests.Utilities", "tests\Common.Tests.Utilities\Common.Tests.Utilities.csproj", "{E0383D9D-7052-493E-B28F-A8B13ABE3E0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators.Tests", "tests\Validators.Tests\Validators.Tests.csproj", "{6C1FADDA-FC24-4A93-B0F7-3F9BF67EEA2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +57,14 @@ Global
 		{62195424-D339-421D-8103-0AB91469220E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62195424-D339-421D-8103-0AB91469220E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62195424-D339-421D-8103-0AB91469220E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0383D9D-7052-493E-B28F-A8B13ABE3E0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0383D9D-7052-493E-B28F-A8B13ABE3E0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0383D9D-7052-493E-B28F-A8B13ABE3E0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0383D9D-7052-493E-B28F-A8B13ABE3E0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C1FADDA-FC24-4A93-B0F7-3F9BF67EEA2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C1FADDA-FC24-4A93-B0F7-3F9BF67EEA2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C1FADDA-FC24-4A93-B0F7-3F9BF67EEA2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C1FADDA-FC24-4A93-B0F7-3F9BF67EEA2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +78,8 @@ Global
 		{C24C8093-9111-49CB-A508-27B2F7032B02} = {DA0C6D6E-D68F-4603-BC74-DBEE37F6431A}
 		{C896D17C-0AFE-41C9-97F1-F40BE6BB989B} = {C24C8093-9111-49CB-A508-27B2F7032B02}
 		{62195424-D339-421D-8103-0AB91469220E} = {C24C8093-9111-49CB-A508-27B2F7032B02}
+		{E0383D9D-7052-493E-B28F-A8B13ABE3E0E} = {5D6213A7-FD48-4AA2-8A5C-A9180DAA1AD2}
+		{6C1FADDA-FC24-4A93-B0F7-3F9BF67EEA2C} = {5D6213A7-FD48-4AA2-8A5C-A9180DAA1AD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6DB0FEE2-68DA-411B-B536-8D52E7B4F142}
