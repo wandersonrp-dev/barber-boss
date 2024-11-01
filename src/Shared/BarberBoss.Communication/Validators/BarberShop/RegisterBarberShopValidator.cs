@@ -36,7 +36,7 @@ public class RegisterBarberShopValidator : AbstractValidator<RequestRegisterBarb
             .WithMessage(ResourceErrorMessages.REQUIRED_PASSWORD)
             .MinimumLength(8)
             .WithMessage(ResourceErrorMessages.PASSWORD_MIN_LENGTH)
-            .MinimumLength(32)
+            .MaximumLength(32)
             .WithMessage(ResourceErrorMessages.PASSWORD_MAX_LENGTH);
 
         RuleFor(x => x.ConfirmPassword)

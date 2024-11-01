@@ -29,7 +29,7 @@ namespace BarberBoss.Exception {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public ResourceErrorMessages() {
+        internal ResourceErrorMessages() {
         }
         
         /// <summary>
@@ -61,6 +61,24 @@ namespace BarberBoss.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Barbearia já existe em nossa base de dados.
+        /// </summary>
+        public static string BARBER_SHOP_ALREADY_EXISTS {
+            get {
+                return ResourceManager.GetString("BARBER_SHOP_ALREADY_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Confirmação de senha deve ser igual a senha.
+        /// </summary>
+        public static string CONFIRM_PASSWORD_DOES_NOT_MATCH {
+            get {
+                return ResourceManager.GetString("CONFIRM_PASSWORD_DOES_NOT_MATCH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Credenciais inválidas.
         /// </summary>
         public static string INVALID_CREDENTIALS {
@@ -79,25 +97,50 @@ namespace BarberBoss.Exception {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Nome deve conter no máximo 50 caracteres.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nome deve ter no máximo 150 caracteres.
         /// </summary>
         public static string NAME_MAX_LENGTH {
             get {
                 return ResourceManager.GetString("NAME_MAX_LENGTH", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Contato deve conter no máximo 50 caracteres.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Senha deve ter no máximo 32 caracteres.
         /// </summary>
-        public static string PHONE_CONTACT_MAX_LENGTH
-        {
-            get
-            {
+        public static string PASSWORD_MAX_LENGTH {
+            get {
+                return ResourceManager.GetString("PASSWORD_MAX_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Senha deve ter no mínimo 8 caracteres.
+        /// </summary>
+        public static string PASSWORD_MIN_LENGTH {
+            get {
+                return ResourceManager.GetString("PASSWORD_MIN_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nome do contato de telefone deve ter no máximo 150 caracteres.
+        /// </summary>
+        public static string PHONE_CONTACT_MAX_LENGTH {
+            get {
                 return ResourceManager.GetString("PHONE_CONTACT_MAX_LENGTH", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Número de telefone deve ter no mínimo 10 e no máximo 11 caracteres.
+        /// </summary>
+        public static string PHONE_MAX_LENGTH {
+            get {
+                return ResourceManager.GetString("PHONE_MAX_LENGTH", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Nome é obrigatório.
         /// </summary>
@@ -106,101 +149,40 @@ namespace BarberBoss.Exception {
                 return ResourceManager.GetString("REQUIRED_NAME", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Senha é obrigatória.
         /// </summary>
-        public static string REQUIRED_PASSWORD
-        {
-            get
-            {
+        public static string REQUIRED_PASSWORD {
+            get {
                 return ResourceManager.GetString("REQUIRED_PASSWORD", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Error desconhecido.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Número de telefone é obrigatório.
+        /// </summary>
+        public static string REQUIRED_PHONE {
+            get {
+                return ResourceManager.GetString("REQUIRED_PHONE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Contato de telefone é obrigatório.
+        /// </summary>
+        public static string REQUIRED_PHONE_CONTACT {
+            get {
+                return ResourceManager.GetString("REQUIRED_PHONE_CONTACT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Erro desconhecido.
         /// </summary>
         public static string UNKNOWN_ERROR {
             get {
                 return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Nome de contato é obrigatório.
-        /// </summary>
-        public static string REQUIRED_PHONE_CONTACT
-        {
-            get
-            {
-                return ResourceManager.GetString("REQUIRED_PHONE_CONTACT", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Número de telefone é obrigatório.
-        /// </summary>
-        public static string REQUIRED_PHONE
-        {
-            get
-            {
-                return ResourceManager.GetString("REQUIRED_PHONE", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Número de telefone deve ter 10 ou 11 digitos.
-        /// </summary>
-        public static string PHONE_MAX_LENGTH
-        {
-            get
-            {
-                return ResourceManager.GetString("PHONE_MAX_LENGTH", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Senha deve ter no mínimo 8 caracteres.
-        /// </summary>
-        public static string PASSWORD_MIN_LENGTH
-        {
-            get
-            {
-                return ResourceManager.GetString("PASSWORD_MIN_LENGTH", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Senha deve ter no máximo 32 caracteres.
-        /// </summary>
-        public static string PASSWORD_MAX_LENGTH
-        {
-            get
-            {
-                return ResourceManager.GetString("PASSWORD_MAX_LENGTH", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a A confirmação de senha deve ser igual a senha.
-        /// </summary>
-        public static string CONFIRM_PASSWORD_DOES_NOT_MATCH
-        {
-            get
-            {
-                return ResourceManager.GetString("CONFIRM_PASSWORD_DOES_NOT_MATCH", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Barbearia já cadastrada.
-        /// </summary>
-        public static string BARBER_SHOP_ALREADY_EXISTS
-        {
-            get
-            {
-                return ResourceManager.GetString("BARBER_SHOP_ALREADY_EXISTS", resourceCulture);
             }
         }
     }

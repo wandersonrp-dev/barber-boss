@@ -118,18 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="INVALID_CREDENTIALS" xml:space="preserve">
-    <value>Invalid credentials</value>
+    <value>Credenciais inválidas</value>
   </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
-    <value>Unknown error</value>
+    <value>Erro desconhecido</value>
   </data>
   <data name="REQUIRED_NAME" xml:space="preserve">
-    <value>Name is required</value>
+    <value>Nome é obrigatório</value>
   </data>
   <data name="NAME_MAX_LENGTH" xml:space="preserve">
-    <value>Name must be at most 150 characters</value>
+    <value>Nome deve ter no máximo 150 caracteres</value>
   </data>
   <data name="INVALID_EMAIL" xml:space="preserve">
-    <value>Invalid email</value>
+    <value>E-mail inválido</value>
+  </data>
+  <data name="BARBER_SHOP_ALREADY_EXISTS" xml:space="preserve">
+    <value>Barbearia já existe em nossa base de dados</value>
+  </data>
+  <data name="CONFIRM_PASSWORD_DOES_NOT_MATCH" xml:space="preserve">
+    <value>Confirmação de senha deve ser igual a senha</value>
+  </data>
+  <data name="PASSWORD_MAX_LENGTH" xml:space="preserve">
+    <value>Senha deve ter no máximo 32 caracteres</value>
+  </data>
+  <data name="PASSWORD_MIN_LENGTH" xml:space="preserve">
+    <value>Senha deve ter no mínimo 8 caracteres</value>
+  </data>
+  <data name="PHONE_CONTACT_MAX_LENGTH" xml:space="preserve">
+    <value>Nome do contato de telefone deve ter no máximo 150 caracteres</value>
+  </data>
+  <data name="PHONE_MAX_LENGTH" xml:space="preserve">
+    <value>Número de telefone deve ter no mínimo 10 e no máximo 11 caracteres</value>
+  </data>
+  <data name="REQUIRED_PASSWORD" xml:space="preserve">
+    <value>Senha é obrigatória</value>
+  </data>
+  <data name="REQUIRED_PHONE" xml:space="preserve">
+    <value>Número de telefone é obrigatório</value>
+  </data>
+  <data name="REQUIRED_PHONE_CONTACT" xml:space="preserve">
+    <value>Contato de telefone é obrigatório</value>
   </data>
 </root>

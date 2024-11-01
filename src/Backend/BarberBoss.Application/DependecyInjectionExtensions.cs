@@ -1,4 +1,6 @@
-﻿using BarberBoss.Application.UseCases.BarberShop.Register;
+﻿using BarberBoss.Application.UseCases.BarberShops.Register;
+using BarberBoss.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BarberBoss.Application;
@@ -7,10 +9,16 @@ public static class DependecyInjectionExtensions
     public static void AddApplication(this IServiceCollection services)
     {
         AddUseCases(services);
+        AddPasswordHasher(services);
     }
 
-    public static void AddUseCases(IServiceCollection services)
+    private static void AddUseCases(IServiceCollection services)
     {
         services.AddScoped<IRegisterBarberShopUseCase, RegisterBarberShopUseCase>();
+    }
+
+    private static void AddPasswordHasher(IServiceCollection services)
+    {
+        services.AddTransient<IPasswordHasher<BarberShop>, PasswordHasher<BarberShop>>();
     }
 }

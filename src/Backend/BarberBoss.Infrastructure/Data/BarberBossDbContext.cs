@@ -19,7 +19,7 @@ public class BarberBossDbContext : DbContext
         {
             entity.Property(e => e.UserType)
                 .HasConversion<string>()
-                .HasDefaultValue(nameof(UserType.BarberShop));
+                .HasDefaultValue(UserType.BarberShop);
         });
     }
 }

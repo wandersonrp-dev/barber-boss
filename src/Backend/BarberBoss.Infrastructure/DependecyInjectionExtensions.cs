@@ -1,4 +1,6 @@
-﻿using BarberBoss.Infrastructure.Data;
+﻿using BarberBoss.Domain.Repositories;
+using BarberBoss.Infrastructure.Data;
+using BarberBoss.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,11 +10,17 @@ public static class DependecyInjectionExtensions
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        AddDbContext(services, configuration);
+        AddDbContext(services, configuration);        
+        AddRepositories(services);
     }
 
-    public static void AddDbContext(IServiceCollection services, IConfiguration configuration)
+    private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<BarberBossDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("BarberBossConnection")));
+        services.AddDbContextFactory<BarberBossDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("BarberBossConnection")));
     }
+
+    private static void AddRepositories(IServiceCollection services)
+    {
+        services.AddScoped<IBarberShopRepository, BarberShopRepository>();
+    }    
 }
