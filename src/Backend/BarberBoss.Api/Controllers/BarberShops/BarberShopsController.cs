@@ -13,7 +13,7 @@ public class BarberShopsController : ControllerBase
 {
     [HttpPost]
     [Route("barber-shops/signup")]
-    [ProducesResponseType(typeof(ResponseRegisterBarberShopJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseRegisterBarberShopJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseRegisterBarberShopJson), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ResponseRegisterBarberShopJson), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ResponseRegisterBarberShopJson>> SignUp([FromServices] IRegisterBarberShopUseCase useCase, [FromBody] RequestRegisterBarberShopJson request)
@@ -32,6 +32,6 @@ public class BarberShopsController : ControllerBase
             };
         }
 
-        return Ok(result.Value);
+        return CreatedAtAction(nameof(SignUp), result.Value);
     }
 }
