@@ -23,9 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarberBoss.Exception", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5D6213A7-FD48-4AA2-8A5C-A9180DAA1AD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Tests.Utilities", "tests\Common.Tests.Utilities\Common.Tests.Utilities.csproj", "{E0383D9D-7052-493E-B28F-A8B13ABE3E0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Tests.Utilities", "tests\Common.Tests.Utilities\Common.Tests.Utilities.csproj", "{E0383D9D-7052-493E-B28F-A8B13ABE3E0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators.Tests", "tests\Validators.Tests\Validators.Tests.csproj", "{6C1FADDA-FC24-4A93-B0F7-3F9BF67EEA2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Validators.Tests", "tests\Validators.Tests\Validators.Tests.csproj", "{6C1FADDA-FC24-4A93-B0F7-3F9BF67EEA2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseCases.Tests", "tests\UseCases.Tests\UseCases.Tests.csproj", "{71FC0288-2FDB-47DB-AF80-47DD6E0F65D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{6C1FADDA-FC24-4A93-B0F7-3F9BF67EEA2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C1FADDA-FC24-4A93-B0F7-3F9BF67EEA2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C1FADDA-FC24-4A93-B0F7-3F9BF67EEA2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71FC0288-2FDB-47DB-AF80-47DD6E0F65D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71FC0288-2FDB-47DB-AF80-47DD6E0F65D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71FC0288-2FDB-47DB-AF80-47DD6E0F65D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71FC0288-2FDB-47DB-AF80-47DD6E0F65D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{62195424-D339-421D-8103-0AB91469220E} = {C24C8093-9111-49CB-A508-27B2F7032B02}
 		{E0383D9D-7052-493E-B28F-A8B13ABE3E0E} = {5D6213A7-FD48-4AA2-8A5C-A9180DAA1AD2}
 		{6C1FADDA-FC24-4A93-B0F7-3F9BF67EEA2C} = {5D6213A7-FD48-4AA2-8A5C-A9180DAA1AD2}
+		{71FC0288-2FDB-47DB-AF80-47DD6E0F65D4} = {5D6213A7-FD48-4AA2-8A5C-A9180DAA1AD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6DB0FEE2-68DA-411B-B536-8D52E7B4F142}
