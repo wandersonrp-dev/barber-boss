@@ -17,4 +17,8 @@
     <ProjectReference Include="..\..\Shared\BarberBoss.Communication\BarberBoss.Communication.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Auth\" />
+  </ItemGroup>
+
 </Project>
