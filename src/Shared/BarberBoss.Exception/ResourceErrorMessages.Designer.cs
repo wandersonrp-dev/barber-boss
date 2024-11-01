@@ -142,6 +142,15 @@ namespace BarberBoss.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a E-mail é obrigatório.
+        /// </summary>
+        public static string REQUIRED_EMAIL {
+            get {
+                return ResourceManager.GetString("REQUIRED_EMAIL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Nome é obrigatório.
         /// </summary>
         public static string REQUIRED_NAME {
