@@ -1,16 +1,9 @@
 ﻿@page "/barbearia/cadastro"
 
-@using BarberBoss.Communication.Requests.BarberShop
-@using BarberBoss.Communication.Responses
-@using BarberBoss.Communication.Validators.BarberShop
-@using BarberBoss.Exception
-@using BarberBoss.Web.Apis.BarberShops
-@using System.Net
-@using System.Text.Json
-
 @layout EmptyLayout
 
 @inject IBarberShopApi BarberShopApi
+@inject NavigationManager NavigationManager
 
 <PageTitle>Cadastre-se - Barber Boss</PageTitle>
 
@@ -19,8 +12,8 @@
         <AntiforgeryToken />
         <h1 class="text-3xl">Cadastre sua barbearia</h1>
 
-        <div class="@(_responseErrorMessages.Count == 0 ? "hidden" : string.Empty) h-10 w-full">
-            @if(_responseErrorMessages.Count > 0)
+        <div class="@(_responseErrorMessages is not null && _responseErrorMessages.Count == 0 ? "hidden" : string.Empty) h-10 w-full">
+            @if (_responseErrorMessages is not null && _responseErrorMessages.Count > 0)
             {
                 @foreach (var errorMessage in _responseErrorMessages)
                 {
@@ -131,7 +124,11 @@
                     default:
                         return;
                 }
-            }            
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/barbearia/logar");
+            }
         }
         catch(Exception ex)
         {
@@ -155,6 +152,11 @@
 
     private void Clear()
     {
-        _model = default!;
+        _model.Name = string.Empty;
+        _model.Email = string.Empty;
+        _model.Phone = string.Empty;
+        _model.PhoneContact = string.Empty;
+        _model.Password = string.Empty;
+        _model.ConfirmPassword = string.Empty;
     }
 }

@@ -1,4 +1,5 @@
-﻿using BarberBoss.Application.UseCases.BarberShops.Register;
+﻿using BarberBoss.Application.UseCases.BarberShops.DoLogin;
+using BarberBoss.Application.UseCases.BarberShops.Register;
 using BarberBoss.Communication.Requests.BarberShop;
 using BarberBoss.Communication.Responses;
 using BarberBoss.Communication.Responses.BarberShop;
@@ -14,9 +15,11 @@ public class BarberShopsController : ControllerBase
     [HttpPost]
     [Route("barber-shops/signup")]
     [ProducesResponseType(typeof(ResponseRegisterBarberShopJson), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ResponseRegisterBarberShopJson), StatusCodes.Status409Conflict)]
-    [ProducesResponseType(typeof(ResponseRegisterBarberShopJson), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ResponseRegisterBarberShopJson>> SignUp([FromServices] IRegisterBarberShopUseCase useCase, [FromBody] RequestRegisterBarberShopJson request)
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<ResponseRegisterBarberShopJson>> SignUp(
+        [FromServices] IRegisterBarberShopUseCase useCase, 
+        [FromBody] RequestRegisterBarberShopJson request)
     {
         var result = await useCase.Execute(request);
 
@@ -33,5 +36,29 @@ public class BarberShopsController : ControllerBase
         }
 
         return CreatedAtAction(nameof(SignUp), result.Value);
+    }
+
+    [HttpPost]
+    [Route("barber-shops/signin")]
+    [ProducesResponseType(typeof(ResponseBarberShopDoLoginJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<ResponseBarberShopDoLoginJson>> DoLogin(
+        [FromServices] IBarberShopDoLoginUseCase useCase, 
+        [FromBody] RequestBarberShopDoLoginJson request)
+    {
+        var result = await useCase.Execute(request);
+
+        if (result.IsFailure)
+        {
+            var error = result.Error;
+
+            return error.Code switch
+            {
+                nameof(ErrorCodes.Unauthorized) => Unauthorized(),                
+                _ => BadRequest(),
+            };
+        }
+
+        return Ok(result.Value);
     }
 }
