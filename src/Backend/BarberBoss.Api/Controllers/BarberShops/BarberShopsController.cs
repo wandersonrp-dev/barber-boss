@@ -41,7 +41,7 @@ public class BarberShopsController : ControllerBase
     [HttpPost]
     [Route("barber-shops/signin")]
     [ProducesResponseType(typeof(ResponseBarberShopDoLoginJson), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<ResponseBarberShopDoLoginJson>> DoLogin(
         [FromServices] IBarberShopDoLoginUseCase useCase, 
         [FromBody] RequestBarberShopDoLoginJson request)
@@ -54,7 +54,7 @@ public class BarberShopsController : ControllerBase
 
             return error.Code switch
             {
-                nameof(ErrorCodes.Unauthorized) => Unauthorized(),                
+                nameof(ErrorCodes.InvalidCredential) => Unauthorized(new ResponseErrorJson(error.Message!)),   
                 _ => BadRequest(),
             };
         }
