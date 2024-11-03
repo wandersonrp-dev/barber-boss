@@ -19,6 +19,23 @@ builder.Services.AddApplication();
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
 
+const string AppWebCors = "AppWebCors";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: AppWebCors, policy =>
+    {
+        var origins = builder.Configuration.GetValue<string>("Settings:Cors:Origins") ?? 
+            throw new ArgumentNullException("Provide origins for cors policy");
+
+        var allowedOrigins = origins.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
+        policy.WithOrigins(allowedOrigins)
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,6 +51,8 @@ if(!builder.Configuration.IsTestEnvironment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(AppWebCors);
 
 app.UseAuthorization();
 

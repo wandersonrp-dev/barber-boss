@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Tests", "tests\WebAp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{0FE1D07D-4442-42A8-B7EF-572FBB47C20C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarberBoss.Web", "src\Web\BarberBoss.Web\BarberBoss.Web.csproj", "{8B1228CA-E1C4-40AD-8030-18A29DAC0359}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarberBoss.Web", "src\Web\BarberBoss.Web\BarberBoss.Web.csproj", "{8B1228CA-E1C4-40AD-8030-18A29DAC0359}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
