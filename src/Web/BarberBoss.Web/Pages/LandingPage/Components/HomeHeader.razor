@@ -1,0 +1,32 @@
+﻿<header class="bg-[#252525] py-4">
+    <div class="container mx-auto flex items-center justify-between px-4">
+        <h1 class="text-2xl font-bold text-neutral-50">Barber Boss</h1>
+        <nav>
+            <ul class="flex items-center space-x-6">
+                <li><a href="#home" class="text-neutral-50 transition-colors hover:text-[#3b82f6]">Home</a></li>
+                <li><a href="#servicos" class="text-neutral-50 transition-colors hover:text-[#3b82f6]">Serviços</a></li>
+                <li class="bg-[#3b82f6] d-flex w-[9rem] relative flex-col rounded">
+                    <button class="w-full cursor-pointer rounded bg-transparent p-2 outline-none" @onclick="SetRegisterOption">
+                        Cadastre-se
+                    </button>
+                    <div class="@(_showRegisterOption ? "" : "hidden") w-[9rem] absolute outline-none">
+                        <ul class="d-flex bg-[#252525] flex-col pb-2 pt-4">
+                            <li class="mb-2 w-full cursor-pointer p-2 hover:bg-gray-800">
+                                <NavLink href="barbearia/cadastro" class="text-base">Sou barbearia</NavLink>                                 
+                            </li>
+                            <li class="w-full cursor-pointer p-2 hover:bg-gray-800">
+                                <NavLink class="text-base">Sou cliente</NavLink>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+@code {
+    private bool _showRegisterOption;
+
+    private void SetRegisterOption() => _showRegisterOption = !_showRegisterOption;
+}
