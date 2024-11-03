@@ -1,7 +1,9 @@
 ﻿using BarberBoss.Domain.Repositories;
+using BarberBoss.Domain.Security.Tokens;
 using BarberBoss.Infrastructure.Data;
 using BarberBoss.Infrastructure.Data.Repositories;
 using BarberBoss.Infrastructure.Extensions;
+using BarberBoss.Infrastructure.Security.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +14,9 @@ public static class DependecyInjectionExtensions
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {                
         AddRepositories(services);
+        AddToken(services, configuration);
 
-        if(!configuration.IsTestEnvironment())
+        if (!configuration.IsTestEnvironment())
         {
             AddDbContext(services, configuration);
         }
@@ -27,5 +30,15 @@ public static class DependecyInjectionExtensions
     private static void AddRepositories(IServiceCollection services)
     {
         services.AddScoped<IBarberShopRepository, BarberShopRepository>();
-    }    
+    }
+    
+    private static void AddToken(IServiceCollection services, IConfiguration configuration)
+    {
+        var signingkey = configuration.GetValue<string>("Settings:Jwt:SigningKey") ?? 
+            throw new ArgumentNullException("Provide Jwt signing key");
+
+        var expiresInMinute = configuration.GetValue<uint>("Settings:Jwt:ExpiresInMinutes");
+
+        services.AddScoped<IAccessTokenGenerator>(config => new JwtTokenGenerator(expiresInMinute, signingkey));
+    }
 }

@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="35.6.1" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
+    <PackageReference Include="Moq" Version="4.20.72" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Backend\BarberBoss.Domain\BarberBoss.Domain.csproj" />
     <ProjectReference Include="..\..\src\Shared\BarberBoss.Communication\BarberBoss.Communication.csproj" />
   </ItemGroup>
 
