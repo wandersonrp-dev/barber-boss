@@ -91,6 +91,8 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -108,6 +110,8 @@ if (!builder.Configuration.IsTestEnvironment())
 app.UseHttpsRedirection();
 
 app.UseCors(AppWebCors);
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

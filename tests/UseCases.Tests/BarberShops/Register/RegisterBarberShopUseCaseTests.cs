@@ -1,12 +1,8 @@
-﻿using BarberBoss.Application.UseCases.BarberShops.Register;
-using BarberBoss.Domain.Entities;
-using BarberBoss.Exception;
+﻿using BarberBoss.Exception;
 using BarberBoss.Exception.ExceptionsBase;
 using Common.Tests.Utilities.Requests.BarberShops;
 using FluentAssertions;
-using UseCases.Tests.Cryptography;
-using UseCases.Tests.Logger;
-using UseCases.Tests.Repositories;
+using UseCases.Tests.UseCaseFactories.BarberShops;
 
 namespace UseCases.Tests.BarberShops.Register;
 public class RegisterBarberShopUseCaseTests
@@ -16,7 +12,7 @@ public class RegisterBarberShopUseCaseTests
     {
         var request = RequestRegisterBarberShopJsonBuilder.Build();
         
-        var useCase = CreateUseCase();
+        var useCase = RegisterBarberShopUseCaseFactory.CreateUseCase();
 
         var result = await useCase.Execute(request);
 
@@ -30,7 +26,7 @@ public class RegisterBarberShopUseCaseTests
         var request = RequestRegisterBarberShopJsonBuilder.Build();
         request.Name = string.Empty;
 
-        var useCase = CreateUseCase();
+        var useCase = RegisterBarberShopUseCaseFactory.CreateUseCase();
 
         var result = await useCase.Execute(request);      
 
@@ -44,22 +40,12 @@ public class RegisterBarberShopUseCaseTests
     {
         var request = RequestRegisterBarberShopJsonBuilder.Build();        
 
-        var useCase = CreateUseCase(request.Email);
+        var useCase = RegisterBarberShopUseCaseFactory.CreateUseCase(request.Email);
 
         var result = await useCase.Execute(request);
-    }
-
-    private static RegisterBarberShopUseCase CreateUseCase(string? email = null)
-    {
-        var barberShopRepository = new BarberShopRepositoryBuilder();
-        var logger = LoggerBuilder<RegisterBarberShopUseCase>.Build();
-        var passwordHasher = PasswordHasherBuilder<BarberShop>.Build();
-
-        if(!string.IsNullOrWhiteSpace(email))
-        {
-            barberShopRepository.ExistsWithSameEmail(email);
-        }
-
-        return new RegisterBarberShopUseCase(barberShopRepository.Build(), logger, passwordHasher);
-    }
+        
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be(nameof(ErrorCodes.Conflict));
+        result.Error.Messages.Should().ContainSingle().And.Contain(error => error.Equals(ResourceErrorMessages.BARBER_SHOP_ALREADY_EXISTS));
+    }    
 }

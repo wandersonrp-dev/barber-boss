@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace UseCases.Tests.Logger;
+namespace Common.Tests.Utilities.Logger;
 public class LoggerBuilder<T> where T : class
 {
     public static ILogger<T> Build()
