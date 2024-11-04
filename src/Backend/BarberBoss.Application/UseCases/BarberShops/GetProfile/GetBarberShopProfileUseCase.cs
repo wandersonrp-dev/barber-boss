@@ -2,6 +2,7 @@
 using BarberBoss.Communication.Responses.BarberShop;
 using BarberBoss.Domain.Repositories;
 using BarberBoss.Domain.Services.LoggedUser;
+using BarberBoss.Exception;
 using BarberBoss.Exception.ExceptionsBase;
 using Microsoft.Extensions.Logging;
 
@@ -25,7 +26,7 @@ public class GetBarberShopProfileUseCase : IGetBarberShopProfileUseCase
 
         if(loggedUser is null)
         {
-            return CustomResult<ResponseBarberShopJson>.Failure(CustomError.NotFound(""));
+            return CustomResult<ResponseBarberShopJson>.Failure(CustomError.NotFound(ResourceErrorMessages.BARBER_SHOP_NOT_FOUND));
         }
 
         return CustomResult<ResponseBarberShopJson>.Success(new ResponseBarberShopJson

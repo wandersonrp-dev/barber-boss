@@ -194,5 +194,16 @@ namespace BarberBoss.Exception {
                 return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Barbearia não encontrada.
+        /// </summary>
+        public static string BARBER_SHOP_NOT_FOUND
+        {
+            get
+            {
+                return ResourceManager.GetString("BARBER_SHOP_NOT_FOUND", resourceCulture);
+            }
+        }
     }
 }
