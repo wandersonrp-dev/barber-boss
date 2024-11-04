@@ -162,4 +162,7 @@
   <data name="REQUIRED_EMAIL" xml:space="preserve">
     <value>E-mail é obrigatório</value>
   </data>
+  <data name="BARBER_SHOP_NOT_FOUND" xml:space="preserve">
+    <value>Barbearia não encontrada</value>
+  </data>
 </root>

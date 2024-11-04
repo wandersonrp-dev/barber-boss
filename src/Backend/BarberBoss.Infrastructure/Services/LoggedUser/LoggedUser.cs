@@ -27,7 +27,7 @@ public class LoggedUser : ILoggedUser
 
         var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
 
-        var claimUserType = jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Role).Value;
+        var claimUserType = jwtSecurityToken.Claims.First(claim => claim.Type == "role").Value;
 
         var claimIdentifier = jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Sid).Value;
 
