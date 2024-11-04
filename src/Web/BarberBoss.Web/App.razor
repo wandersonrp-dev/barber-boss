@@ -1,31 +1,60 @@
 ﻿@* <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(EmptyLayout)">
-                <NotAuthorized>
-                    @if (context.User.Identity?.IsAuthenticated != true)
-                    {
-                        <RedirectToLogin />
-                    }
-                    else
-                    {
-                        <p role="alert">You are not authorized to access this resource.</p>
-                    }
-                </NotAuthorized>
-            </AuthorizeRouteView>
-            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            @if (routeData.PageType == typeof(Home)
+                || routeData.PageType == typeof(Pages.Auth.BarberShops.DoLogin.Index)
+                || routeData.PageType == typeof(Pages.Auth.BarberShops.Register.Index))
+            {
+                <p>Chegou aqui</p>
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(EmptyLayout)"/>
+            }
+            else
+            {
+                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                    <NotAuthorized>
+                        @if (context.User.Identity?.IsAuthenticated != true)
+                        {
+                            <p>Chegou no Authorized</p>
+                            <RedirectToLogin />
+                        }
+                        else
+                        {
+                            <p role="alert">You are not authorized to access this resource.</p>
+                        }
+                    </NotAuthorized>
+                </AuthorizeRouteView>
+                <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            }
+
         </Found>
         <NotFound>
             <PageTitle>Not found</PageTitle>
-            <LayoutView Layout="@typeof(EmptyLayout)">
+            <LayoutView Layout="@typeof(MainLayout)">
                 <p role="alert">Sorry, there's nothing at this address.</p>
             </LayoutView>
         </NotFound>
     </Router>
 </CascadingAuthenticationState> *@
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            @if (routeData.PageType == typeof(Home)
+            || routeData.PageType == typeof(Pages.Auth.BarberShops.DoLogin.Index)
+            || routeData.PageType == typeof(Pages.Auth.BarberShops.Register.Index))
+            {
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(EmptyLayout)" />
+            }
+            else
+            {
+                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="typeof(MainLayout)" />
+            }
+        </Found>
+        <NotFound>
 
-<Router AppAssembly="@typeof(App).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(EmptyLayout)" />
-    </Found>
-</Router>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p>Não encontrado</p>
+            </LayoutView>
+
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>

@@ -1,9 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using System.Security.Claims
 @inject NavigationManager Navigation
 
 <AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity?.Name!
+        @if (context.User.Claims.FirstOrDefault(claim => claim.Type == "unique_name") is Claim nameClaim)
+        {
+            <p>Hello, @nameClaim.Value</p>
+        }
+        else
+        {
+            <p>Email claim not found</p>
+        }
         <button class="nav-link btn btn-link" @onclick="BeginLogOut">Log out</button>
     </Authorized>
     <NotAuthorized>
@@ -11,9 +19,10 @@
     </NotAuthorized>
 </AuthorizeView>
 
+
 @code{
     public void BeginLogOut()
     {
-        Navigation.NavigateToLogout("authentication/logout");
+        Navigation.NavigateToLogout("/logout");
     }
 }
