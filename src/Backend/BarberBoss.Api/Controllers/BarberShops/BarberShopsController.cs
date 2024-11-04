@@ -12,7 +12,7 @@ namespace BarberBoss.Api.Controllers.BarberShops;
 [ApiController]
 public class BarberShopsController : ControllerBase
 {
-    [HttpPost]
+    [HttpPost]  
     [Route("barber-shops/signup")]
     [ProducesResponseType(typeof(ResponseRegisterBarberShopJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status409Conflict)]

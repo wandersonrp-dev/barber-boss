@@ -40,4 +40,15 @@ public class BarberShopRepository : IBarberShopRepository
 
         return barberShop;
     }
+
+    public async Task<BarberShop?> GetByIdAsync(Guid id)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+
+        var barberShop = await context.BarberShops
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id.Equals(id));
+
+        return barberShop;
+    }
 }
