@@ -1,0 +1,129 @@
+﻿@page "/barbearia/entrar"
+
+@layout EmptyLayout
+
+@inject IBarberShopApi BarberShopApi
+@inject NavigationManager NavigationManager
+
+<PageTitle>Entrar - Barber Boss</PageTitle>
+
+<main class="bg-[#1a1a1a] border-2 flex h-screen w-screen items-center justify-center">
+    <form class="min-w-[400px] min-h-[300px] flex flex-col gap-5 rounded px-5 py-8 shadow-xl shadow-neutral-800" @onsubmit="Submit">
+        <AntiforgeryToken />
+        <h1 class="text-3xl">Entre em sua conta</h1>
+
+        <div class="@(_responseErrorMessages is not null && _responseErrorMessages.Count == 0 ? "hidden" : string.Empty) h-10 w-full">
+            @if (_responseErrorMessages is not null && _responseErrorMessages.Count > 0)
+            {
+                @foreach (var errorMessage in _responseErrorMessages)
+                {
+                    <span class="text-red-500">@errorMessage</span>
+                }
+            }
+        </div>
+
+        <div class="flex w-full flex-col gap-4">
+            <input class="text-[#1a1a1a] h-12 w-full rounded px-1 outline-none" type="email" placeholder="Digite o e-mail" @bind-value="_model.Email" />
+            <span class="text-red-500 @(ErrorMessagesDictionaryHasKey("Email") ? string.Empty : "hidden")">@(ErrorMessagesDictionaryHasKey("Email") ? _validationErrorMessages["Email"] : string.Empty)</span>
+
+            <input class="text-[#1a1a1a] h-12 w-full rounded px-1 outline-none" type="password" placeholder="Digite a senha" @bind-value="_model.Password" />
+            <span class="text-red-500 @(ErrorMessagesDictionaryHasKey("Password") ? string.Empty : "hidden")">@(ErrorMessagesDictionaryHasKey("Password") ? _validationErrorMessages["Password"] : string.Empty)</span>
+        </div>
+        <div class="w-full">
+            <button class="bg-[#3b82f6] flex w-full items-center justify-center rounded p-3 hover:bg-[#2563eb]" disabled="@_isLoading">
+                @if (_isLoading)
+                {
+                    <svg class="mr-3 h-5 w-5 animate-spin" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                    <span>Entrar</span>
+                }
+                else
+                {
+                    <span>Entrar</span>
+                }
+            </button>
+        </div>
+        <div class="flex w-full flex-col">
+            <NavLink href="/barbearia/cadastro" class="w-full text-center">Ainda não possui uma conta? <span class="text-[#3b82f6]">Cadastre-se</span></NavLink>
+        </div>
+    </form>
+</main>
+
+@code {
+    private RequestBarberShopDoLoginJson _model = new();
+    private Dictionary<string, string> _validationErrorMessages = new();
+    private List<string> _responseErrorMessages = new();
+    private BarberShopDoLoginValidator _validator = new();
+    private bool _isLoading;
+
+    private async Task Submit()
+    {
+        _isLoading = true;
+
+        var validatorResult = _validator.Validate(_model);
+
+        if (!validatorResult.IsValid)
+        {
+            foreach (var error in validatorResult.Errors)
+            {
+                if (!_validationErrorMessages.ContainsKey(error.PropertyName))
+                {
+                    _validationErrorMessages.Add(error.PropertyName, error.ErrorMessage);
+                }
+            }
+
+            _isLoading = false;
+
+            await Task.Delay(TimeSpan.FromSeconds(2));
+
+            _validationErrorMessages.Clear();
+            return;
+        }
+
+        try
+        {
+            var result = await BarberShopApi.SignIn(_model);
+
+            if (!result.IsSuccessStatusCode)
+            {
+                if (result.StatusCode == HttpStatusCode.Unauthorized)
+                    _responseErrorMessages.Add(ResourceErrorMessages.INVALID_CREDENTIALS);
+                else
+                    _responseErrorMessages.Add(ResourceErrorMessages.UNKNOWN_ERROR);
+
+                StateHasChanged();
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/barbearia/logar");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            _isLoading = false;
+            Clear();
+        }
+    }
+
+    private bool ErrorMessagesDictionaryHasKey(string key)
+    {
+        bool hasKey = default;
+
+        if (_validationErrorMessages.ContainsKey(key)) hasKey = true;
+
+        return hasKey;
+    }
+
+    private void Clear()
+    {
+        _model.Email = string.Empty;
+        _model.Password = string.Empty;
+    }
+}

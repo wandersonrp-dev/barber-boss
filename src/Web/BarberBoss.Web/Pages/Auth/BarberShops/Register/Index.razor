@@ -59,7 +59,7 @@
             </button>
         </div>
         <div class="flex w-full flex-col">
-            <NavLink href="/" class="w-full text-center">Já possui uma conta? <span class="text-[#3b82f6]">Entrar</span></NavLink>
+            <NavLink href="/barbearia/entrar" class="w-full text-center">Já possui uma conta? <span class="text-[#3b82f6]">Entrar</span></NavLink>
         </div>
     </form>
 </main>
@@ -81,7 +81,6 @@
         {
             foreach (var error in validatorResult.Errors)
             {
-                Console.WriteLine($"Property Name: {error.PropertyName}");
                 if (!_validationErrorMessages.ContainsKey(error.PropertyName))
                 {                    
                     _validationErrorMessages.Add(error.PropertyName, error.ErrorMessage);
@@ -127,7 +126,7 @@
             }
             else
             {
-                NavigationManager.NavigateTo("/barbearia/logar");
+                NavigationManager.NavigateTo("/");
             }
         }
         catch(Exception ex)
