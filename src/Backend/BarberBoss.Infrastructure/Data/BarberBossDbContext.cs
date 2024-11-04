@@ -15,11 +15,17 @@ public class BarberBossDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Ignore<User>();
+
         modelBuilder.Entity<BarberShop>(entity =>
         {
             entity.Property(e => e.UserType)
                 .HasConversion<string>()
                 .HasDefaultValue(UserType.BarberShop);
+
+            entity.Property(e => e.UserStatus)
+                .HasConversion<string>()
+                .HasDefaultValue(UserStatus.Active);
         });
     }
 }

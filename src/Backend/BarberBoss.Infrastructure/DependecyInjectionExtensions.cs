@@ -1,9 +1,11 @@
 ﻿using BarberBoss.Domain.Repositories;
 using BarberBoss.Domain.Security.Tokens;
+using BarberBoss.Domain.Services.LoggedUser;
 using BarberBoss.Infrastructure.Data;
 using BarberBoss.Infrastructure.Data.Repositories;
 using BarberBoss.Infrastructure.Extensions;
 using BarberBoss.Infrastructure.Security.Tokens;
+using BarberBoss.Infrastructure.Services.LoggedUser;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,7 @@ public static class DependecyInjectionExtensions
     {                
         AddRepositories(services);
         AddToken(services, configuration);
+        AddServices(services);
 
         if (!configuration.IsTestEnvironment())
         {
@@ -40,5 +43,10 @@ public static class DependecyInjectionExtensions
         var expiresInMinute = configuration.GetValue<uint>("Settings:Jwt:ExpiresInMinutes");
 
         services.AddScoped<IAccessTokenGenerator>(config => new JwtTokenGenerator(expiresInMinute, signingkey));
+    }
+
+    private static void AddServices(IServiceCollection services)
+    {
+        services.AddScoped<ILoggedUser, LoggedUser>();
     }
 }

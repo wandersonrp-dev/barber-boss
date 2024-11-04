@@ -1,5 +1,7 @@
 using BarberBoss.Api.Filters;
+using BarberBoss.Api.Token;
 using BarberBoss.Application;
+using BarberBoss.Domain.Security.Tokens;
 using BarberBoss.Infrastructure;
 using BarberBoss.Infrastructure.Data;
 using BarberBoss.Infrastructure.Extensions;
@@ -15,6 +17,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
 
 builder.Services.AddSwaggerGen(config =>
 {
