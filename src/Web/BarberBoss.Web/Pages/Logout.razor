@@ -1,0 +1,31 @@
+﻿@page "/logout"
+
+@using BarberBoss.Communication.Enums
+
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ILocalStorageService LocalStorageService
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        await LocalStorageService.RemoveItemAsync("auth_token");
+
+        var roleClaim = user.Claims.FirstOrDefault(claim => claim.Type == "role")!.Value;
+
+        ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsLoggedOut();
+        
+        if (roleClaim is not null && Enum.TryParse<UserType>(roleClaim, out var userRole))
+        {
+            if (userRole == UserType.BarberShop)
+                NavigationManager.NavigateTo("/barbearia/entrar");
+            else if (userRole == UserType.Customer)
+                NavigationManager.NavigateTo("/auth/entrar");
+            else 
+                NavigationManager.NavigateTo("/auth/entrar");
+        }
+    }
+}
