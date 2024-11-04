@@ -7,4 +7,7 @@ public interface IBarberShopApi
 {
     [Post("/api/barber-shops/signup")]
     Task<ApiResponse<ResponseRegisterBarberShopJson>> SignUp(RequestRegisterBarberShopJson request);
+    
+    [Post("/api/barber-shops/signin")]
+    Task<ApiResponse<ResponseBarberShopDoLoginJson>> SignIn(RequestBarberShopDoLoginJson request);
 }

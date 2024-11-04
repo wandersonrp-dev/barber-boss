@@ -46,6 +46,6 @@ public class RegisterBarberShopUseCaseTests
         
         result.IsFailure.Should().BeTrue();
         result.Error.Code.Should().Be(nameof(ErrorCodes.Conflict));
-        result.Error.Messages.Should().ContainSingle().And.Contain(error => error.Equals(ResourceErrorMessages.BARBER_SHOP_ALREADY_EXISTS));
+        result.Error.Message.Should().Be(ResourceErrorMessages.BARBER_SHOP_ALREADY_EXISTS);
     }    
 }

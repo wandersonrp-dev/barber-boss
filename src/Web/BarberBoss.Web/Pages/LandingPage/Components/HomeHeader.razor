@@ -1,6 +1,8 @@
-﻿<header class="bg-[#252525] py-4">
-    <div class="container mx-auto flex items-center justify-between px-4">
-        <h1 class="text-2xl font-bold text-neutral-50">Barber Boss</h1>
+﻿<header class="bg-[#252525] py-1">
+    <div class="container mx-auto flex items-center justify-between px-12">
+        <div>
+            <img src="barber-boss-logo.png" class="text-center" height="70" width="70" />
+        </div>
         <nav>
             <ul class="flex items-center space-x-6">
                 <li><a href="#home" class="text-neutral-50 transition-colors hover:text-[#3b82f6]">Home</a></li>
@@ -12,7 +14,22 @@
                     <div class="@(_showRegisterOption ? "" : "hidden") w-[9rem] absolute outline-none">
                         <ul class="d-flex bg-[#252525] flex-col pb-2 pt-4">
                             <li class="mb-2 w-full cursor-pointer p-2 hover:bg-gray-800">
-                                <NavLink href="barbearia/cadastro" class="text-base">Sou barbearia</NavLink>                                 
+                                <NavLink href="barbearia/cadastro" class="h-full w-full text-base">Sou barbearia</NavLink>                                 
+                            </li>
+                            <li class="w-full cursor-pointer p-2 hover:bg-gray-800">
+                                <NavLink class="text-base">Sou cliente</NavLink>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="d-flex w-[6rem] relative flex-col rounded bg-transparent">
+                    <button class="w-full cursor-pointer rounded bg-transparent p-2 outline-none" @onclick="SetLoginOption">
+                        Entrar
+                    </button>
+                    <div class="@(_showLoginOption ? "" : "hidden") w-[9rem] absolute outline-none">
+                        <ul class="d-flex bg-[#252525] flex-col pb-2 pt-4">
+                            <li class="mb-2 w-full cursor-pointer p-2 hover:bg-gray-800">
+                                <NavLink href="barbearia/entrar" class="h-full w-full text-base">Sou barbearia</NavLink>
                             </li>
                             <li class="w-full cursor-pointer p-2 hover:bg-gray-800">
                                 <NavLink class="text-base">Sou cliente</NavLink>
@@ -27,6 +44,8 @@
 
 @code {
     private bool _showRegisterOption;
+    private bool _showLoginOption;
 
     private void SetRegisterOption() => _showRegisterOption = !_showRegisterOption;
+    private void SetLoginOption() => _showLoginOption = !_showLoginOption;
 }
