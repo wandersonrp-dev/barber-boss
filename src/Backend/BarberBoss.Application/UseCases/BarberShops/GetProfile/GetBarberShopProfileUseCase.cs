@@ -37,7 +37,7 @@ public class GetBarberShopProfileUseCase : IGetBarberShopProfileUseCase
             Name = barberShop.Name,
             Email = barberShop.Email,
             UserStatus = (UserStatus)barberShop.UserStatus,
-            Phone = barberShop.Phone,
+            Phone = barberShop.Phone, 
             PhoneContact = barberShop.PhoneContact,
             CreatedAt = barberShop.CreatedAt,
             UpdatedAt = barberShop.UpdatedAt,

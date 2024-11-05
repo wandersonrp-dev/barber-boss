@@ -3,22 +3,37 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<AuthorizeView>
+    <div class="page">
+        <div class="bg-[#252525] min-h-screen border border-r-neutral-900 shadow-2xl md:min-w-[13.75rem]">
+            <div class="bg-[#252525] flex h-14 justify-center border-b-neutral-50">
+                <img src="barber-boss-logo.png" height="50" width="50"/>
+            </div>
+            
+            @* <NavMenu /> *@
 
-    <main>
-        <div class="top-row auth px-4">
-            <LoginDisplay />
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+        <main>
+            @* <div class="top-row auth px-4">
+            <LoginDisplay />
+            </div> *@
+
+            <div class="bg-[#252525] flex h-14 w-full">
+                <header class="flex h-full w-full items-center justify-end px-14 py-2">
+                    <div class="bg-[#3b82f6] flex h-10 w-10 cursor-pointer items-center justify-center rounded-full">
+                        <span>@context.User!.Claims.FirstOrDefault(claim => claim.Type == "unique_name")!.Value.Substring(0, 1)</span>
+                    </div>
+                </header>
+            </div>
+
+            <article class="content px-4">
+                @Body
+            </article>
+        </main>
+    </div>
+</AuthorizeView>
+
 
 @code {
     protected override async Task OnInitializedAsync()
@@ -27,8 +42,8 @@
         var user = authState.User;
 
         if (!user.Identity!.IsAuthenticated)
-        {            
+        {
             NavigationManager.NavigateTo("/");
-        }                
-    }
+        }
+    }    
 }
