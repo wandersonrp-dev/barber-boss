@@ -29,15 +29,19 @@ public class GetBarberShopProfileUseCase : IGetBarberShopProfileUseCase
             return CustomResult<ResponseBarberShopJson>.Failure(CustomError.NotFound(ResourceErrorMessages.BARBER_SHOP_NOT_FOUND));
         }
 
+        var barberShop = await _barberShopRepository.GetByIdAsync(loggedUser.Id);
+
         return CustomResult<ResponseBarberShopJson>.Success(new ResponseBarberShopJson
         { 
-            Id = loggedUser.Id,
-            Name = loggedUser.Name,
-            Email = loggedUser.Email,
-            UserStatus = (UserStatus)loggedUser.UserStatus,
-            CreatedAt = loggedUser.CreatedAt,
-            UpdatedAt = loggedUser.UpdatedAt,
-            UserType = (UserType)loggedUser.UserType,                        
+            Id = barberShop!.Id,
+            Name = barberShop.Name,
+            Email = barberShop.Email,
+            UserStatus = (UserStatus)barberShop.UserStatus,
+            Phone = barberShop.Phone,
+            PhoneContact = barberShop.PhoneContact,
+            CreatedAt = barberShop.CreatedAt,
+            UpdatedAt = barberShop.UpdatedAt,
+            UserType = (UserType)barberShop.UserType,                        
         });        
     }
 }

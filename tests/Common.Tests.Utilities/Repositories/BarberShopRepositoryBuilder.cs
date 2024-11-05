@@ -24,5 +24,12 @@ public class BarberShopRepositoryBuilder
         return this;
     }
 
+    public BarberShopRepositoryBuilder GetByIdAsync(BarberShop barberShop)
+    {
+        _repository.Setup(repository => repository.GetByIdAsync(barberShop.Id)).ReturnsAsync(barberShop);
+
+        return this;
+    }
+
     public IBarberShopRepository Build() => _repository.Object;
 }
