@@ -1,5 +1,8 @@
-﻿using BarberBoss.Infrastructure.Data;
+﻿using BarberBoss.Domain.Entities;
+using BarberBoss.Infrastructure.Data;
+using Common.Tests.Utilities.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace WebApi.Tests;
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
+    private BarberShop _barberShop;    
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {        
         builder.UseEnvironment("Test")
@@ -19,6 +24,33 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                     config.UseInMemoryDatabase("InMemoryDbForTesting");
                     config.UseInternalServiceProvider(provider);
                 });
+
+                var scope = services.BuildServiceProvider().CreateScope();
+                var context = scope.ServiceProvider.GetRequiredService<IDbContextFactory<BarberBossDbContext>>();
+                var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();               
+
+                StartDatabase(context, passwordHasher);
             });
+    }
+    
+    public BarberShop GetBarberShop() => _barberShop;
+
+    private void StartDatabase(IDbContextFactory<BarberBossDbContext> contextFactory, IPasswordHasher<User> passwordHasher)
+    {
+        var barberShop = BarberShopBuilder.Build();
+
+        var passwordAux = barberShop.Password;
+
+        _barberShop = barberShop;
+
+        barberShop.Password = passwordHasher.HashPassword(barberShop, barberShop.Password);
+
+        using var context = contextFactory.CreateDbContext();
+        
+        context.BarberShops.Add(barberShop);
+
+        context.SaveChanges();
+
+        _barberShop.Password = passwordAux;
     }
 }

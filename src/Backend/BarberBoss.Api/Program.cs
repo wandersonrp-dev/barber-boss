@@ -1,11 +1,13 @@
 using BarberBoss.Api.Filters;
 using BarberBoss.Api.Token;
 using BarberBoss.Application;
+using BarberBoss.Domain.Entities;
 using BarberBoss.Domain.Security.Tokens;
 using BarberBoss.Infrastructure;
 using BarberBoss.Infrastructure.Data;
 using BarberBoss.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -63,6 +65,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
+
+builder.Services.AddTransient<IPasswordHasher<User>, PasswordHasher<User>>();
 
 const string AppWebCors = "AppWebCors";
 
