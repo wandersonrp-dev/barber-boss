@@ -1,0 +1,33 @@
+﻿@page "/barbearia/perfil"
+
+@inject IBarberShopApi BarberShopApi
+
+<PageTitle>Perfil - Barber Boss</PageTitle>
+
+<h1>Perfil Barber Boss</h1>
+
+@code {
+    private ResponseBarberShopJson _barberShop = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetBarberShopProfile();
+    }
+
+    private async Task GetBarberShopProfile()
+    {
+        try
+        {
+            var result = await BarberShopApi.GetProfile();
+
+            if(result.IsSuccessStatusCode)
+            {
+                _barberShop = result.Content;
+            }
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}

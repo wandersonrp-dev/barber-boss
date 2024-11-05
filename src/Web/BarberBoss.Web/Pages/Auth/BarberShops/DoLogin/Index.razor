@@ -108,7 +108,7 @@
 
                 await LocalStorageService.SetItemAsync<string>("auth_token", token);
 
-                ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(_model.Email);
+                ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(token);
 
                 NavigationManager.NavigateTo("/dashboard");
             }

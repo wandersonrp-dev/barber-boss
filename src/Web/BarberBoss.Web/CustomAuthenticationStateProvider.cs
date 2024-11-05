@@ -28,19 +28,23 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         var refitSettings = new RefitSettings
         {
             AuthorizationHeaderValueGetter = (httpMessage, cancelationToken) => Task.FromResult(token)
-        };
+        };      
 
         RestService.For<IBarberShopApi>(_httpClient, refitSettings);
 
         return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt")));        
     }
 
-    public void MarkUserAsAuthenticated(string email)
+    public void MarkUserAsAuthenticated(string token)
     {
-        var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[]
-        {
-               new Claim(ClaimTypes.Email, email)
-            }, "apiauth"));
+        var claims = ParseClaimsFromJwt(token);
+
+        if (claims is null)
+        {            
+            return;
+        }           
+
+        var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(claims, "apiauth"));
 
         var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
         NotifyAuthenticationStateChanged(authState);
