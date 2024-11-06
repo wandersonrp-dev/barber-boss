@@ -10,4 +10,7 @@ public interface IBarberShopApi
     
     [Post("/api/barber-shops/signin")]
     Task<ApiResponse<ResponseBarberShopDoLoginJson>> SignIn(RequestBarberShopDoLoginJson request);
+
+    [Get("/api/barber-shops/perfil")]
+    Task<ApiResponse<ResponseBarberShopJson>> GetProfile();
 }

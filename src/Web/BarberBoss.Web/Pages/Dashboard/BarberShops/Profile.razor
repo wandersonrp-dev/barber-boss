@@ -1,0 +1,108 @@
+﻿@page "/barbearia/perfil"
+
+@layout MainLayout
+
+@inject IBarberShopApi BarberShopApi
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Perfil - Barber Boss</PageTitle>
+
+<div class="flex flex-col">
+    <div class="border-b-2 border-neutral-900/20 mb-4 flex w-full justify-center py-4">
+        <div class="border-[#3b82f6] border-2 flex h-24 w-24 items-center justify-center rounded-full">
+            @if (User is not null)
+            {
+                <span class="text-4xl">@User!.Claims.FirstOrDefault(claim => claim.Type == "unique_name")!.Value.Substring(0, 1)</span>
+            }
+        </div>
+    </div>
+    <div class="w-full text-center">
+        <h2 class="text-2xl">Perfil da Barbearia</h2>
+    </div>
+
+    <div class="mt-4 w-full">
+        <form class="flex flex-col gap-8">
+            <div class="grid-cols-2 grid gap-4">
+                <AntiforgeryToken />
+                <div class="flex flex-col gap-2">
+                    <label>Nome:</label>
+                    <input type="text" @bind-value="_barberShop.Name" class="text-[#1a1a1a] h-12 rounded border border-neutral-900 px-1 text-lg" />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label>E-mail:</label>
+                    <input type="email" @bind-value="_barberShop.Email" class="text-[#1a1a1a] h-12 rounded border border-neutral-900 px-1 text-lg" />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label>Telefone:</label>
+                    <input type="text" @bind-value="_barberShop.Phone" class="text-[#1a1a1a] h-12 rounded border border-neutral-900 px-1 text-lg" />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label>Contato de Telefone:</label>
+                    <input type="text" @bind-value="_barberShop.PhoneContact" class="text-[#1a1a1a] h-12 rounded border border-neutral-900 px-1 text-lg" />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label>Senha:</label>
+                    <input type="password" @bind-value="_barberShop.Password" class="text-[#1a1a1a] h-12 rounded border border-neutral-900 px-1 text-lg" />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label>Confirmação de Senha:</label>
+                    <input type="password" @bind-value="_confirmPassword" class="text-[#1a1a1a] h-12 rounded border border-neutral-900 px-1 text-lg" />
+                </div>
+            </div> 
+            <div class="flex w-full justify-end">
+                <button class="bg-[#3b82f6] min-w-[200px] flex w-1/4 items-center justify-center rounded p-3 hover:bg-[#2563eb]" disabled="@_isLoading">
+                    @if (_isLoading)
+                    {
+                        <svg class="mr-3 h-5 w-5 animate-spin" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                        </svg>
+                        <span>Salvar</span>
+                    }
+                    else
+                    {
+                        <span>Salvar</span>
+                    }
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@code {
+    private ResponseBarberShopJson _barberShop = new();
+    private string _confirmPassword = string.Empty;
+    private bool _isLoading;
+
+    [CascadingParameter]
+    public ClaimsPrincipal? User { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetBarberShopProfile();
+    }
+
+    private async Task GetBarberShopProfile()
+    {
+        try
+        {
+            var result = await BarberShopApi.GetProfile();
+
+            if (result.IsSuccessStatusCode)
+            {
+                _barberShop = result.Content;                
+                StateHasChanged();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error => {ex.Message}");
+        }
+    }        
+}
