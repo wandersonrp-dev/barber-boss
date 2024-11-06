@@ -5,11 +5,14 @@ module.exports = {
         './**/*.cshtml',
         './**/*.razor.cs',
         './**/*.js',
-        './**/*.ts'
+        './**/*.ts',
+        "./node_modules/flowbite/**/*.js"
     ],
     theme: {
         extend: {},
     },
-    plugins: [],
+    plugins: [
+        require('flowbite/plugin')
+    ],
 }
 

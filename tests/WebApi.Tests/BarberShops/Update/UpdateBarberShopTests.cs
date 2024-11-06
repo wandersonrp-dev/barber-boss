@@ -1,20 +1,20 @@
 ﻿using BarberBoss.Communication.Requests.BarberShop;
 using BarberBoss.Domain.Entities;
+using Common.Tests.Utilities.Requests.BarberShops;
 using FluentAssertions;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace WebApi.Tests.BarberShops.GetProfile;
-public class GetBarberShopProfileTests : IClassFixture<CustomWebApplicationFactory>
+namespace WebApi.Tests.BarberShops.Update;
+public class UpdateBarberShopTests : IClassFixture<CustomWebApplicationFactory>
 {
-    private const string METHOD = "api/barber-shops/profile";
     private readonly HttpClient _httpClient;
+    private const string METHOD = "/api/barber-shops/profile"; 
     private readonly BarberShop _barberShop;
 
-
-    public GetBarberShopProfileTests(CustomWebApplicationFactory webApplicationFactory)
+    public UpdateBarberShopTests(CustomWebApplicationFactory webApplicationFactory)
     {
         _httpClient = webApplicationFactory.CreateClient();
         _barberShop = webApplicationFactory.GetBarberShop();
@@ -39,14 +39,18 @@ public class GetBarberShopProfileTests : IClassFixture<CustomWebApplicationFacto
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        var result = await _httpClient.GetAsync(METHOD);
+        var barberShop = RequestBarberShopJsonBuilder.Build();
 
-        result.StatusCode.Should().Be(HttpStatusCode.OK);
+        var result = await _httpClient.PatchAsJsonAsync(METHOD, new RequestBarberShopJson
+        {
+            Email= barberShop.Email,            
+            Name = barberShop.Name,
+            Phone = barberShop.Phone,
+            PhoneContact = barberShop.PhoneContact,
+            Password = barberShop.Password,            
 
-        var body = await result.Content.ReadAsStreamAsync();
+        });
 
-        var response = await JsonDocument.ParseAsync(body);
-
-        response.RootElement.GetProperty("email").GetString().Should().Be(_barberShop.Email);
-    }
+        result.StatusCode.Should().Be(HttpStatusCode.NoContent);        
+    }   
 }

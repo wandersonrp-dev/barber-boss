@@ -31,5 +31,19 @@ public class BarberShopRepositoryBuilder
         return this;
     }
 
+    public BarberShopRepositoryBuilder UpdateAsync(BarberShop barberShop)
+    {
+        _repository.Setup(repository => repository.UpdateAsync(barberShop)).ReturnsAsync(true);
+
+        return this;
+    }
+
+    public BarberShopRepositoryBuilder UpdateAsyncFailure(BarberShop barberShop)
+    {
+        _repository.Setup(repository => repository.UpdateAsync(barberShop)).ReturnsAsync(false);
+
+        return this;
+    }
+
     public IBarberShopRepository Build() => _repository.Object;
 }
