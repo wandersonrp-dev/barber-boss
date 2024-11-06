@@ -51,4 +51,15 @@ public class BarberShopRepository : IBarberShopRepository
 
         return barberShop;
     }
+
+    public async Task<bool> UpdateAsync(BarberShop barberShop)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+
+        context.BarberShops.Update(barberShop);
+
+        var result = await context.SaveChangesAsync();
+
+        return result > 0;
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using BarberBoss.Application.UseCases.BarberShops.DoLogin;
 using BarberBoss.Application.UseCases.BarberShops.GetProfile;
 using BarberBoss.Application.UseCases.BarberShops.Register;
+using BarberBoss.Application.UseCases.BarberShops.Update;
 using BarberBoss.Communication.Requests.BarberShop;
 using BarberBoss.Communication.Responses;
 using BarberBoss.Communication.Responses.BarberShop;
@@ -84,5 +85,32 @@ public class BarberShopsController : ControllerBase
         }
 
         return Ok(result.Value);
+    }
+
+    [HttpPatch]
+    [Authorize]
+    [Route("barber-shops/perfil")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<ResponseBarberShopJson>> UpdateProfile([FromServices] IUpdateBarberShopUseCase useCase, [FromBody] RequestBarberShopJson request)
+    {
+        var result = await useCase.Execute(request);
+
+        if (result.IsFailure)
+        {
+            var error = result.Error;
+
+            return error.Code switch
+            {
+                nameof(ErrorCodes.NotFound) => NotFound(new ResponseErrorJson(error.Message!)),
+                nameof(ErrorCodes.InternalServerError) => new ObjectResult(new ResponseErrorJson(error.Message!)),
+                nameof(ErrorCodes.ErrorOnValidation) => BadRequest(new ResponseErrorJson(error.Messages!)),
+                _ => BadRequest(),
+            };
+        }
+
+        return NoContent();
     }
 }

@@ -6,6 +6,7 @@ public sealed record CustomError(string Code, string? Message = null, List<strin
     private static readonly string ErrorOnValidationCode = ErrorCodes.ErrorOnValidation;
     private static readonly string InvalidCredentialCode = ErrorCodes.InvalidCredential;
     private static readonly string UnauthorizedCode = ErrorCodes.Unauthorized;
+    private static readonly string InternalServerErrorCode = ErrorCodes.InternalServerError;
 
     public static readonly CustomError None = new(string.Empty, string.Empty, new List<string>());
 
@@ -32,5 +33,10 @@ public sealed record CustomError(string Code, string? Message = null, List<strin
     public static CustomError Unauthorized()
     {
         return new CustomError(UnauthorizedCode);
+    }
+
+    public static CustomError InternalServerError()
+    {
+        return new CustomError(InternalServerErrorCode, Message: ResourceErrorMessages.UNKNOWN_ERROR);
     }
 }

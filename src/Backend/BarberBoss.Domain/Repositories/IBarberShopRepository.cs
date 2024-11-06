@@ -7,4 +7,5 @@ public interface IBarberShopRepository
     Task<bool> ExistsWithSameEmail(string email);
     Task<BarberShop?> GetByEmailAsync(string email);
     Task<BarberShop?> GetByIdAsync(Guid id);
+    Task<bool> UpdateAsync(BarberShop barberShop);
 }
