@@ -9,8 +9,8 @@
 
 <PageTitle>Entrar - Barber Boss</PageTitle>
 
-<main class="flex h-screen w-screen items-center justify-center bg-[#1a1a1a]">
-    <form class="flex min-h-[300px] min-w-[400px] flex-col gap-5 rounded px-5 py-8 shadow-xl shadow-neutral-800" @onsubmit="Submit">
+<main class="bg-[#1a1a1a] flex h-screen w-screen items-center justify-center">
+    <form class="min-h-[300px] min-w-[400px] flex flex-col gap-5 rounded px-5 py-8 shadow-xl shadow-neutral-800" @onsubmit="Submit">
         <AntiforgeryToken />
         <h1 class="text-3xl">Entre em sua conta</h1>
 
@@ -25,14 +25,14 @@
         </div>
 
         <div class="flex w-full flex-col gap-4">
-            <input class="h-12 w-full rounded px-1 text-[#1a1a1a] outline-none" type="email" placeholder="Digite o e-mail" @bind-value="_model.Email" />
+            <input class="text-[#1a1a1a] h-12 w-full rounded px-2 outline-none" type="email" placeholder="Digite o e-mail" @bind-value="_model.Email" />
             <span class="text-red-500 @(ErrorMessagesDictionaryHasKey("Email") ? string.Empty : "hidden")">@(ErrorMessagesDictionaryHasKey("Email") ? _validationErrorMessages["Email"] : string.Empty)</span>
 
-            <input class="h-12 w-full rounded px-1 text-[#1a1a1a] outline-none" type="password" placeholder="Digite a senha" @bind-value="_model.Password" />
+            <input class="text-[#1a1a1a] h-12 w-full rounded px-2 outline-none" type="password" placeholder="Digite a senha" @bind-value="_model.Password" />
             <span class="text-red-500 @(ErrorMessagesDictionaryHasKey("Password") ? string.Empty : "hidden")">@(ErrorMessagesDictionaryHasKey("Password") ? _validationErrorMessages["Password"] : string.Empty)</span>
         </div>
         <div class="w-full">
-            <button class="flex w-full items-center justify-center rounded bg-[#3b82f6] p-3 hover:bg-[#2563eb]" disabled="@_isLoading">
+            <button class="bg-[#3b82f6] flex w-full items-center justify-center rounded p-3 hover:bg-[#2563eb]" disabled="@_isLoading">
                 @if (_isLoading)
                 {
                     <svg class="mr-3 h-5 w-5 animate-spin" viewBox="0 0 24 24">
@@ -87,7 +87,7 @@
         }
 
         try
-        {
+        {            
             var result = await BarberShopApi.SignIn(_model);
 
             if (!result.IsSuccessStatusCode)

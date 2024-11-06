@@ -1,8 +1,5 @@
-﻿using BarberBoss.Web.Apis.Auth;
-using BarberBoss.Web.Apis.BarberShops;
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
-using Refit;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -23,14 +20,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         var token = await _localStorage.GetItemAsync<string>("auth_token");
 
         if (string.IsNullOrWhiteSpace(token))
-            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
-
-        var refitSettings = new RefitSettings
-        {
-            AuthorizationHeaderValueGetter = (httpMessage, cancelationToken) => Task.FromResult(token)
-        };      
-
-        RestService.For<IBarberShopApi>(_httpClient, refitSettings);
+            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));      
 
         return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt")));        
     }
@@ -40,9 +30,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         var claims = ParseClaimsFromJwt(token);
 
         if (claims is null)
-        {            
             return;
-        }           
 
         var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(claims, "apiauth"));
 

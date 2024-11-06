@@ -5,41 +5,42 @@
 
 <AuthorizeView>
     <div class="page">
-        <div class="min-h-screen bg-[#252525] py-1 md:min-w-[13.75rem]">
-            <div class="flex h-14 justify-center border-b-neutral-50 bg-[#252525]">
-                <img src="barber-boss-logo.png" height="50" width="50"/>
-            </div>                   
+        <div class="bg-[#252525] min-h-screen py-1 md:min-w-[13.75rem]">
+            <div class="bg-[#252525] flex h-14 justify-center border-b-neutral-50">
+                <img src="barber-boss-logo.png" height="60" width="60" />
+            </div>
         </div>
 
-        <main>            
-            <div class="flex h-14 w-full bg-[#252525]">
+        <main>
+            <div class="bg-[#252525] flex h-14 w-full">
                 <header class="relative flex h-full w-full items-center justify-end py-2 pr-20">
-                    <div class="h-10 w-10 rounded-full bg-[#3b82f6]" @onclick="ShowProfileDropDown">
+                    <div class="bg-[#3b82f6] h-10 w-10 rounded-full" @onclick="ShowProfileDropDown">
                         <div class="flex h-full w-full cursor-pointer items-center justify-center">
                             <span class="font-bold text-neutral-50">@context.User!.Claims.FirstOrDefault(claim => claim.Type == "unique_name")!.Value.Substring(0, 1)</span>
                         </div>
-                        <div class="@(_isProfileDropdownOpen ? "" : "hidden") bg-neutral-500/15 absolute right-px mt-2.5 h-[12rem] w-[15.625rem] rounded-md px-4 py-3">
+                        <div class="@(_isProfileDropdownOpen ? "" : "hidden") bg-neutral-500/15 h-[12rem] w-[15.625rem] absolute right-px mt-2.5 rounded-md px-4 py-3">
                             <div class="flex w-full cursor-pointer items-center justify-start gap-2" @onclick="GoToProfile">
-                                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#3b82f6]">
+                                <div class="bg-[#3b82f6] flex h-8 w-8 items-center justify-center rounded-full">
                                     <span class="font-medium text-neutral-50">@context.User!.Claims.FirstOrDefault(claim => claim.Type == "unique_name")!.Value.Substring(0, 1)</span>
                                 </div>
                                 <div class="flex w-auto flex-col">
                                     <span class="text-base">@context.User!.Claims.FirstOrDefault(claim => claim.Type == "unique_name")!.Value</span>
                                     <span class="text-xs">@context.User!.Claims.FirstOrDefault(claim => claim.Type == "email")!.Value</span>
-                                </div>                                
+                                </div>
                             </div>
                             <ul class="flex w-full flex-col">
                                 <li></li>
                             </ul>
                         </div>
                     </div>
-                    
+
                 </header>
             </div>
-
-            <article class="content px-4">
-                @Body
-            </article>
+            <CascadingValue Value="User">
+                <article class="content">
+                    @Body
+                </article>
+            </CascadingValue>
         </main>
     </div>
 </AuthorizeView>
@@ -47,14 +48,15 @@
 
 @code {
     private bool _isProfileDropdownOpen;
-    private ClaimsPrincipal _user = default!;
+    
+    public ClaimsPrincipal User { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        _user = authState.User;
+        User = authState.User;
 
-        if (!_user.Identity!.IsAuthenticated)
+        if (!User.Identity!.IsAuthenticated)
         {
             NavigationManager.NavigateTo("/");
         }
@@ -64,8 +66,8 @@
 
     private void GoToProfile()
     {
-        var userType = _user.Claims.FirstOrDefault(claim => claim.Type == "role")!.Value;     
-        
+        var userType = User.Claims.FirstOrDefault(claim => claim.Type == "role")!.Value;
+
         if (userType is not null && Enum.TryParse<UserType>(userType, out var userRole))
         {
             if (userRole == UserType.BarberShop)
