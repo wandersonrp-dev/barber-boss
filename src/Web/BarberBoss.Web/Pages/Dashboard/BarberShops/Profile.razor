@@ -4,6 +4,7 @@
 
 @inject IBarberShopApi BarberShopApi
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime JS
 
 <PageTitle>Perfil - Barber Boss</PageTitle>
 
@@ -21,53 +22,56 @@
     </div>
 
     <div class="mt-4 w-full">
-        <form class="flex flex-col gap-8" @onsubmit="Submit">
-            <div class="grid-cols-2 grid gap-4">
-                <AntiforgeryToken />
-                <div class="flex flex-col gap-2">
-                    <label>Nome:</label>
-                    <input type="text" @bind-value="_barberShop.Name" class="h-12 rounded border border-neutral-900 px-1 text-lg text-[#1a1a1a]" />
-                </div>
+        @if(_barberShop is not null)
+        {
+            <form class="flex flex-col gap-8" @onsubmit="Submit">
+                <div class="grid-cols-2 grid gap-4">
+                    <AntiforgeryToken />
+                    <div class="flex flex-col gap-2">
+                        <label>Nome:</label>
+                        <input type="text" @bind-value="_barberShop.Name" class="h-12 rounded border border-neutral-900 px-1 text-lg text-[#1a1a1a]" />
+                    </div>
 
-                <div class="flex flex-col gap-2">
-                    <label>E-mail:</label>
-                    <input type="email" @bind-value="_barberShop.Email" class="h-12 rounded border border-neutral-900 px-1 text-lg text-[#1a1a1a]" />
-                </div>
+                    <div class="flex flex-col gap-2">
+                        <label>E-mail:</label>
+                        <input type="email" @bind-value="_barberShop.Email" class="h-12 rounded border border-neutral-900 px-1 text-lg text-[#1a1a1a]" />
+                    </div>
 
-                <div class="flex flex-col gap-2">
-                    <label>Telefone:</label>
-                    <input type="text" @bind-value="_barberShop.Phone" class="h-12 rounded border border-neutral-900 px-1 text-lg text-[#1a1a1a]" />
-                </div>
+                    <div class="flex flex-col gap-2">
+                        <label>Telefone:</label>
+                        <input type="text" @ref="_inputPhone" @bind-value="_barberShop.Phone" class="h-12 rounded border border-neutral-900 px-1 text-lg text-[#1a1a1a]" />
+                    </div>
 
-                <div class="flex flex-col gap-2">
-                    <label>Contato de Telefone:</label>
-                    <input type="text" @bind-value="_barberShop.PhoneContact" class="h-12 rounded border border-neutral-900 px-1 text-lg text-[#1a1a1a]" />
-                </div>
+                    <div class="flex flex-col gap-2">
+                        <label>Contato de Telefone:</label>
+                        <input type="text" @bind-value="_barberShop.PhoneContact" class="h-12 rounded border border-neutral-900 px-1 text-lg text-[#1a1a1a]" />
+                    </div>
 
-                <div class="flex flex-col gap-2">
-                    <label>Senha:</label>
-                    <input type="password" @bind-value="_barberShop.Password" class="h-12 rounded border border-neutral-900 px-1 text-lg text-[#1a1a1a]" />
-                </div>
+                    <div class="flex flex-col gap-2">
+                        <label>Senha:</label>
+                        <input type="password" @bind-value="_barberShop.Password" class="h-12 rounded border border-neutral-900 px-1 text-lg text-[#1a1a1a]" />
+                    </div>
 
-                <div class="flex flex-col gap-2">
-                    <label>Confirmação de Senha:</label>
-                    <input type="password" @bind-value="_confirmPassword" class="h-12 rounded border border-neutral-900 px-1 text-lg text-[#1a1a1a]" />
+                    <div class="flex flex-col gap-2">
+                        <label>Confirmação de Senha:</label>
+                        <input type="password" @bind-value="_confirmPassword" class="h-12 rounded border border-neutral-900 px-1 text-lg text-[#1a1a1a]" />
+                    </div>
                 </div>
-            </div>
-            <div class="flex w-full justify-end">
-                <button class="flex w-1/4 min-w-[200px] items-center justify-center rounded bg-[#3b82f6] p-3 hover:bg-[#2563eb]" disabled="@_isLoading">
-                    @if (_isLoading)
-                    {                        
-                        <Spinner />
-                        <span class="text-neutral-500">Salvar</span>
-                    }
-                    else
-                    {
-                        <span class="text-neutral-50">Salvar</span>
-                    }
-                </button>
-            </div>
-        </form>
+                <div class="flex w-full justify-end">
+                    <button class="flex w-1/4 min-w-[200px] items-center justify-center rounded bg-[#3b82f6] p-3 hover:bg-[#2563eb]" disabled="@_isLoading">
+                        @if (_isLoading)
+                        {
+                            <Spinner />
+                            <span class="text-neutral-500">Salvar</span>
+                        }
+                        else
+                        {
+                            <span class="text-neutral-50">Salvar</span>
+                        }
+                    </button>
+                </div>
+            </form>
+        }
     </div>
 
     @if(_success)
@@ -82,12 +86,14 @@
     private bool _isLoading;
     private bool _success;
 
+    private ElementReference _inputPhone = new();
+
     [CascadingParameter]
     public ClaimsPrincipal? User { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        await GetBarberShopProfile();
+        await GetBarberShopProfile();                
     }
 
     private async Task GetBarberShopProfile()
@@ -140,6 +146,15 @@
             _isLoading = false;
             _success = false;
             StateHasChanged();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(100));
+            await JS.InvokeVoidAsync("initMask", _inputPhone, new { mask = "(00) 0 0000-0000" });                                    
         }
     }
 }
