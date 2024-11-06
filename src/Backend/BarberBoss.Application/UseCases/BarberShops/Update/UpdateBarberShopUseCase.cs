@@ -1,5 +1,4 @@
 ﻿using BarberBoss.Communication.Requests.BarberShop;
-using BarberBoss.Communication.Responses.BarberShop;
 using BarberBoss.Communication.Validators.BarberShop;
 using BarberBoss.Domain.Entities;
 using BarberBoss.Domain.Repositories;
