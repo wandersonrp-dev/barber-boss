@@ -11,7 +11,7 @@ namespace WebApi.Tests.BarberShops.Update;
 public class UpdateBarberShopTests : IClassFixture<CustomWebApplicationFactory>
 {
     private readonly HttpClient _httpClient;
-    private const string METHOD = "/api/barber-shops/perfil"; 
+    private const string METHOD = "/api/barber-shops/profile"; 
     private readonly BarberShop _barberShop;
 
     public UpdateBarberShopTests(CustomWebApplicationFactory webApplicationFactory)

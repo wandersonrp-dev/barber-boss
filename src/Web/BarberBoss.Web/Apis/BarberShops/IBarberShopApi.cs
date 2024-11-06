@@ -11,6 +11,9 @@ public interface IBarberShopApi
     [Post("/api/barber-shops/signin")]
     Task<ApiResponse<ResponseBarberShopDoLoginJson>> SignIn(RequestBarberShopDoLoginJson request);
 
-    [Get("/api/barber-shops/perfil")]
+    [Get("/api/barber-shops/profile")]
     Task<ApiResponse<ResponseBarberShopJson>> GetProfile();
+
+    [Patch("/api/barber-shops/profile")]
+    Task<IApiResponse> UpdateProfile(RequestBarberShopJson request);
 }

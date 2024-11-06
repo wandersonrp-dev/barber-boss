@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace WebApi.Tests.BarberShops.GetProfile;
 public class GetBarberShopProfileTests : IClassFixture<CustomWebApplicationFactory>
 {
-    private const string METHOD = "api/barber-shops/perfil";
+    private const string METHOD = "api/barber-shops/profile";
     private readonly HttpClient _httpClient;
     private readonly BarberShop _barberShop;
 

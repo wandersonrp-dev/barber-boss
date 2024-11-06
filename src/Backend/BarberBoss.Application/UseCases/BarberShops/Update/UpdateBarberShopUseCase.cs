@@ -70,6 +70,7 @@ public class UpdateBarberShopUseCase : IUpdateBarberShopUseCase
 
         if(!result.IsValid)
         {
+
             var errorMessages = result.Errors.Select(x => x.ErrorMessage).ToList();
 
             return CustomError.ErrorOnValidation(errorMessages);

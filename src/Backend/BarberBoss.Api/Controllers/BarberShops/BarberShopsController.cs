@@ -67,7 +67,7 @@ public class BarberShopsController : ControllerBase
 
     [HttpGet]
     [Authorize]
-    [Route("barber-shops/perfil")]
+    [Route("barber-shops/profile")]
     [ProducesResponseType(typeof(ResponseBarberShopJson), StatusCodes.Status200OK)]
     public async Task<ActionResult<ResponseBarberShopJson>> GetProfile([FromServices] IGetBarberShopProfileUseCase useCase)
     {
@@ -89,7 +89,7 @@ public class BarberShopsController : ControllerBase
 
     [HttpPatch]
     [Authorize]
-    [Route("barber-shops/perfil")]
+    [Route("barber-shops/profile")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
