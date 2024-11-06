@@ -48,11 +48,7 @@ public class UpdateBarberShopUseCase : IUpdateBarberShopUseCase
             return CustomResult<bool>.Failure(CustomError.NotFound(ResourceErrorMessages.BARBER_SHOP_NOT_FOUND));
         }
 
-        barberShop.Name = request.Name;
-        barberShop.Email = request.Email;
-        barberShop.Phone = request.Phone;
-        barberShop.PhoneContact = request.PhoneContact;
-        barberShop.Password = _passwordHasher.HashPassword(barberShop, request.Password);
+        UpdateBarberShopFields(barberShop, request);
 
         var hasBeenUpdated = await _barberShopRepository.UpdateAsync(barberShop);
 
@@ -80,5 +76,23 @@ public class UpdateBarberShopUseCase : IUpdateBarberShopUseCase
         }
 
         return CustomError.None;
+    }
+
+    private void UpdateBarberShopFields(BarberShop barberShop, RequestBarberShopJson request)
+    {
+        if (!string.IsNullOrWhiteSpace(request.Name))
+            barberShop.Name = request.Name;
+
+        if (!string.IsNullOrWhiteSpace(request.Email))
+            barberShop.Email = request.Email;
+
+        if (!string.IsNullOrWhiteSpace(request.Phone))
+            barberShop.Phone = request.Phone;
+
+        if (!string.IsNullOrWhiteSpace(request.PhoneContact))
+            barberShop.PhoneContact = request.PhoneContact;
+
+        if (!string.IsNullOrWhiteSpace(request.Password))
+            barberShop.Password = _passwordHasher.HashPassword(barberShop, request.Password);
     }
 }
