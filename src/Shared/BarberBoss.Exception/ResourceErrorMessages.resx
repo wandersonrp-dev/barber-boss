@@ -165,4 +165,7 @@
   <data name="BARBER_SHOP_NOT_FOUND" xml:space="preserve">
     <value>Barbearia não encontrada</value>
   </data>
+  <data name="BARBER_ALREADY_EXISTS" xml:space="preserve">
+    <value>Barbeiro já cadastrado</value>
+  </data>
 </root>

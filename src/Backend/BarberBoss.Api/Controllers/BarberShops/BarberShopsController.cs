@@ -1,4 +1,5 @@
-﻿using BarberBoss.Application.UseCases.BarberShops.DoLogin;
+﻿using BarberBoss.Application.UseCases.BarberShops.CreateBarber;
+using BarberBoss.Application.UseCases.BarberShops.DoLogin;
 using BarberBoss.Application.UseCases.BarberShops.GetProfile;
 using BarberBoss.Application.UseCases.BarberShops.Register;
 using BarberBoss.Application.UseCases.BarberShops.Update;
@@ -112,5 +113,32 @@ public class BarberShopsController : ControllerBase
         }
 
         return NoContent();
+    }
+
+    [HttpPost]
+    [Authorize]
+    [Route("barber-shops/barbers")]
+    [ProducesResponseType(StatusCodes.Status201Created)]    
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<ResponseBarberShopJson>> CreateBarber(
+        [FromServices] ICreateBarberUseCase useCase, 
+        [FromBody] RequestCreateBarberJson request)
+    {
+        var result = await useCase.Execute(request);
+
+        if (result.IsFailure)
+        {
+            var error = result.Error;
+
+            return error.Code switch
+            {
+                nameof(ErrorCodes.Conflict) => Conflict(new ResponseErrorJson(error.Message!)),                
+                nameof(ErrorCodes.ErrorOnValidation) => BadRequest(new ResponseErrorJson(error.Messages!)),
+                _ => BadRequest(),
+            };
+        }
+
+        return Created();
     }
 }

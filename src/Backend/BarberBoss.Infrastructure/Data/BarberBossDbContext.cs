@@ -10,6 +10,7 @@ public class BarberBossDbContext : DbContext
     }
 
     public DbSet<BarberShop> BarberShops { get; set; }
+    public DbSet<Barber> Barbers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -22,6 +23,22 @@ public class BarberBossDbContext : DbContext
             entity.Property(e => e.UserType)
                 .HasConversion<string>()
                 .HasDefaultValue(UserType.BarberShop);
+
+            entity.Property(e => e.UserStatus)
+                .HasConversion<string>()
+                .HasDefaultValue(UserStatus.Active);
+
+            entity.HasMany(e => e.Barbers)
+                .WithOne(e => e.BarberShop)
+                .HasForeignKey(e => e.BarberShopId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Barber>(entity =>
+        {
+            entity.Property(e => e.UserType)
+                .HasConversion<string>()
+                .HasDefaultValue(UserType.Barber);
 
             entity.Property(e => e.UserStatus)
                 .HasConversion<string>()

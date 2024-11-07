@@ -61,11 +61,29 @@ namespace BarberBoss.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Barbeiro já cadastrado.
+        /// </summary>
+        public static string BARBER_ALREADY_EXISTS {
+            get {
+                return ResourceManager.GetString("BARBER_ALREADY_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Barbearia já existe em nossa base de dados.
         /// </summary>
         public static string BARBER_SHOP_ALREADY_EXISTS {
             get {
                 return ResourceManager.GetString("BARBER_SHOP_ALREADY_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Barbearia não encontrada.
+        /// </summary>
+        public static string BARBER_SHOP_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("BARBER_SHOP_NOT_FOUND", resourceCulture);
             }
         }
         
@@ -192,17 +210,6 @@ namespace BarberBoss.Exception {
         public static string UNKNOWN_ERROR {
             get {
                 return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Barbearia não encontrada.
-        /// </summary>
-        public static string BARBER_SHOP_NOT_FOUND
-        {
-            get
-            {
-                return ResourceManager.GetString("BARBER_SHOP_NOT_FOUND", resourceCulture);
             }
         }
     }
