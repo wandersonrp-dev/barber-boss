@@ -1,4 +1,5 @@
 ﻿using BarberBoss.Communication.Requests.BarberShop;
+using BarberBoss.Communication.Responses.BarberShop;
 using BarberBoss.Communication.Validators.BarberShop;
 using BarberBoss.Domain.Entities;
 using BarberBoss.Domain.Enums;
@@ -29,14 +30,14 @@ public class CreateBarberUseCase : ICreateBarberUseCase
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<CustomResult<bool>> Execute(RequestCreateBarberJson request)
+    public async Task<CustomResult<ResponseCreateBarberJson>> Execute(RequestCreateBarberJson request)
     {
         var result = Validate(request);
 
         if(result.Code == nameof(ErrorCodes.ErrorOnValidation))
         {
             _logger.LogError(message: nameof(ErrorCodes.ErrorOnValidation), args: result.Messages!.ToArray());
-            return CustomResult<bool>.Failure(result);
+            return CustomResult<ResponseCreateBarberJson>.Failure(result);
         }
 
         var loggedUser = await _loggedUser.Get();
@@ -47,7 +48,7 @@ public class CreateBarberUseCase : ICreateBarberUseCase
         {
             _logger.LogError(message: $"{nameof(ErrorCodes.Conflict)}: {request.Email}", args: [ResourceErrorMessages.BARBER_ALREADY_EXISTS]);
 
-            return CustomResult<bool>.Failure(CustomError.Conflict(ResourceErrorMessages.BARBER_ALREADY_EXISTS));
+            return CustomResult<ResponseCreateBarberJson>.Failure(CustomError.Conflict(ResourceErrorMessages.BARBER_ALREADY_EXISTS));
         }
 
         var barber = new Barber
@@ -62,7 +63,7 @@ public class CreateBarberUseCase : ICreateBarberUseCase
 
         await _barberRepository.AddAsync(barber);
 
-        return CustomResult<bool>.Success(true);
+        return CustomResult<ResponseCreateBarberJson>.Success(new ResponseCreateBarberJson(true));
     }
 
     private static CustomError Validate(RequestCreateBarberJson request)
