@@ -14,7 +14,7 @@
 
 <body>
     <div id="app">
-        <div class="flex h-screen w-screen items-center justify-center bg-[#252525]">
+        <div class="bg-[#252525] flex h-screen w-screen items-center justify-center">
             <img src="barber-boss.svg" class="text-center" height="300" width="300" />
         </div>
     </div>
@@ -28,6 +28,8 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     <script src="https://unpkg.com/imask"></script>
+    <script src="/js/InputMaskUtils.js"></script>
+    
     <script>
         window.initializeFlowbite = () => {
             initFlowbite();
@@ -37,13 +39,8 @@
     <script>
         let init = false;
         window.initMask = function (element, options) {                        
-            try {                
-                //if (!init && !element._imaskInitialized) {
-                //    element._imaskInitialized = true;
-                //    init = true;
-
-                //}
-                return IMask(element, options);
+            try {
+                IMask(element, options);
             } catch (error) {
                 console.error(error);
             }            
