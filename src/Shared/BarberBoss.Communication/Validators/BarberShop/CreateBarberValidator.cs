@@ -3,9 +3,9 @@ using BarberBoss.Exception;
 using FluentValidation;
 
 namespace BarberBoss.Communication.Validators.BarberShop;
-public class RegisterBarberShopValidator : AbstractValidator<RequestRegisterBarberShopJson>
+public class CreateBarberValidator : AbstractValidator<RequestCreateBarberJson>
 {
-    public RegisterBarberShopValidator()
+    public CreateBarberValidator()
     {
         RuleFor(x => x.Name)
             .Cascade(CascadeMode.Stop)
@@ -19,14 +19,7 @@ public class RegisterBarberShopValidator : AbstractValidator<RequestRegisterBarb
             .NotEmpty()
             .WithMessage(ResourceErrorMessages.REQUIRED_EMAIL)
             .EmailAddress()
-            .WithMessage(ResourceErrorMessages.INVALID_EMAIL);
-
-        RuleFor(x => x.PhoneContact)
-            .Cascade(CascadeMode.Stop)
-            .NotEmpty()
-            .WithMessage(ResourceErrorMessages.REQUIRED_PHONE_CONTACT)
-            .MaximumLength(150)
-            .WithMessage(ResourceErrorMessages.PHONE_CONTACT_MAX_LENGTH);
+            .WithMessage(ResourceErrorMessages.INVALID_EMAIL);     
 
         RuleFor(x => x.Phone)
             .NotEmpty()
@@ -47,6 +40,6 @@ public class RegisterBarberShopValidator : AbstractValidator<RequestRegisterBarb
                 RuleFor(x => x.ConfirmPassword)
                     .Equal(x => x.Password)
                     .WithMessage(ResourceErrorMessages.CONFIRM_PASSWORD_DOES_NOT_MATCH);
-            });        
-    }               
+            });
+    }
 }

@@ -32,7 +32,9 @@ public static class DependecyInjectionExtensions
 
     private static void AddRepositories(IServiceCollection services)
     {
-        services.AddScoped<IBarberShopRepository, BarberShopRepository>();
+        services
+            .AddScoped<IBarberShopRepository, BarberShopRepository>()
+            .AddScoped<IBarberRepository, BarberRepository>();
     }
     
     private static void AddToken(IServiceCollection services, IConfiguration configuration)
