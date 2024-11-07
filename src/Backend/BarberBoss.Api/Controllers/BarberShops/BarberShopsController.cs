@@ -95,7 +95,7 @@ public class BarberShopsController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ResponseBarberShopJson>> UpdateProfile([FromServices] IUpdateBarberShopUseCase useCase, [FromBody] RequestBarberShopJson request)
+    public async Task<ActionResult> UpdateProfile([FromServices] IUpdateBarberShopUseCase useCase, [FromBody] RequestBarberShopJson request)
     {
         var result = await useCase.Execute(request);
 
@@ -118,10 +118,10 @@ public class BarberShopsController : ControllerBase
     [HttpPost]
     [Authorize]
     [Route("barber-shops/barbers")]
-    [ProducesResponseType(StatusCodes.Status201Created)]    
+    [ProducesResponseType(typeof(ResponseCreateBarberJson), StatusCodes.Status201Created)]    
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<ResponseBarberShopJson>> CreateBarber(
+    public async Task<ActionResult<ResponseCreateBarberJson>> CreateBarber(
         [FromServices] ICreateBarberUseCase useCase, 
         [FromBody] RequestCreateBarberJson request)
     {
@@ -139,6 +139,6 @@ public class BarberShopsController : ControllerBase
             };
         }
 
-        return Created();
+        return CreatedAtAction(nameof(CreateBarber), result.Value);
     }
 }
