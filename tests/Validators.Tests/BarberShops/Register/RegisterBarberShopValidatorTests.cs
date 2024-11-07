@@ -168,6 +168,7 @@ public class RegisterBarberShopValidatorTests
         result.Errors.Should().ContainSingle().And.Contain(error => error.ErrorMessage.Equals(ResourceErrorMessages.REQUIRED_PASSWORD));
     }
 
+
     [Theory]
     [InlineData("1234567")]
     [InlineData("12345")]
