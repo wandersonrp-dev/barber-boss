@@ -29,4 +29,13 @@ public class BarberRepository : IBarberRepository
             .AsNoTracking()
             .AnyAsync(e => e.Email.Equals(email) && e.BarberShopId.Equals(barberShopId));        
     }
+
+    public async Task<List<Barber>> GetAllBarbersAsync(Guid barberShopId)
+    {
+        using var context = _contextFactory.CreateDbContext();
+
+        return await context.Barbers
+            .AsNoTracking()
+            .Where(e => e.BarberShopId.Equals(barberShopId)).ToListAsync();
+    }
 }

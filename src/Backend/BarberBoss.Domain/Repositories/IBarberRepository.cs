@@ -5,4 +5,5 @@ public interface IBarberRepository
 {
     Task AddAsync(Barber barber);
     Task<bool> ExistsWithSameEmail(string email, Guid barberShopId);
+    Task<List<Barber>> GetAllBarbersAsync(Guid barberShopId);
 }

@@ -56,6 +56,7 @@ public class CreateBarberUseCase : ICreateBarberUseCase
             Name = request.Name,
             Email = request.Email,
             UserType = UserType.Barber,
+            Phone = request.Phone,
             BarberShopId = loggedUser!.Id,            
         };
 
