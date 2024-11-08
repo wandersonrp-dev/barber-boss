@@ -16,4 +16,7 @@ public interface IBarberShopApi
 
     [Patch("/api/barber-shops/profile")]
     Task<IApiResponse> UpdateProfile(RequestBarberShopJson request);
+
+    [Post("/api/barber-shops/barbers")]
+    Task<IApiResponse> CreateBarber(RequestCreateBarberJson request);
 }

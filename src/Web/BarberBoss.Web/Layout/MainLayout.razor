@@ -56,7 +56,7 @@
     public ClaimsPrincipal User { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
-    {
+    {        
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         User = authState.User;
 
@@ -85,9 +85,11 @@
 
     protected override async Task OnAfterRenderAsync(bool isFirstRender)
     {
+        await Js.InvokeVoidAsync("window.initializeFlowbite");
+
         if (isFirstRender)
         {
-            await Js.InvokeVoidAsync("window.initializeFlowbite");
+            
         }
     }
 
