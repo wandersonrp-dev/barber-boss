@@ -41,4 +41,13 @@ public class BarberRepository : IBarberRepository
             .Where(e => e.WorkBarbers.Any(wb => wb.BarberShopId == barberShopId))
             .ToListAsync();
     }
+
+    public async Task<Barber?> GetByEmailAsync(string email)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+
+        return await context.Barbers
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Email.Equals(email));
+    }
 }
