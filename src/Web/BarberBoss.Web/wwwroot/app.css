@@ -1171,10 +1171,6 @@ input:checked + .toggle-bg {
   top: 3.5rem;
 }
 
-.top-\[\@Top\] {
-  top: @Top;
-}
-
 .isolate {
   isolation: isolate;
 }
@@ -1289,6 +1285,10 @@ input:checked + .toggle-bg {
 
 .me-2 {
   margin-inline-end: 0.5rem;
+}
+
+.ml-1 {
+  margin-left: 0.25rem;
 }
 
 .mr-3 {

@@ -145,7 +145,7 @@
                     @if(_isLoading)
                     {
                         <Spinner />
-                        <span>Cadastrar</span>
+                        <span class="ml-1">Cadastrar</span>
                     }
                     else
                     {
@@ -159,17 +159,7 @@
 
 @if(_errorMessages.Count > 0)
 {
-    var top = 14;
-    for(var i = 0; i < _errorMessages.Count; i++)
-    {               
-        <ErrorToast Message="@_errorMessages[i]" Top="@(i == 0 ? top : top+=60 )" />
-        Task.Delay(TimeSpan.FromSeconds(1));
-    }
-
-    @* Task.Delay(TimeSpan.FromSeconds(1));
-    _errorMessages.Clear();
-    StateHasChanged(); *@
-
+    <ErrorToast Messages="_errorMessages" />
 }
 else if(_success)
 {
@@ -192,28 +182,33 @@ else if(_success)
 
         await GetInputPhoneOut();
 
-        // _model.Phone = _inputPhoneOut;        
+        _model.Phone = _inputPhoneOut;            
 
         var validatorResult = _validator.Validate(_model);
 
         if (!validatorResult.IsValid)
         {
+            _isLoading = false;
+
             foreach(var error in validatorResult.Errors)
             {
-                _errorMessages.Add(error.ErrorMessage);               
+                _errorMessages.Add(error.ErrorMessage);       
+                StateHasChanged();                 
             }
-
-            _isLoading = false;
+            
+            await Task.Delay(TimeSpan.FromSeconds(3));
+            _errorMessages.Clear();
+            StateHasChanged();
             return;
         }
 
         try
         {            
-
             var result = await BarberShopApi.CreateBarber(_model);
 
             if (!result.IsSuccessStatusCode)
             {                
+                
                 switch (result.StatusCode)
                 {
                     case HttpStatusCode.Conflict:
@@ -229,8 +224,13 @@ else if(_success)
                             foreach (var error in validationErrors.ErrorMessages)
                             {
                                 _errorMessages.Add(error);
+                                StateHasChanged();
                             }
                         }
+
+                        await Task.Delay(TimeSpan.FromSeconds(2));
+                        _errorMessages.Clear();
+                        StateHasChanged();
 
                         break;
                     default:
@@ -240,6 +240,9 @@ else if(_success)
             else
             {
                 _success = true;
+                _isLoading = false;
+                StateHasChanged();
+                await Task.Delay(TimeSpan.FromSeconds(3));
             }
         }
         catch (Exception ex)
