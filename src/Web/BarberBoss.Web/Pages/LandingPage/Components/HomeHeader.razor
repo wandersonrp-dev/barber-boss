@@ -28,10 +28,13 @@
                     </button>
                     <div class="@(_showLoginOption ? "" : "hidden") absolute w-[9rem] outline-none">
                         <ul class="d-flex flex-col bg-[#252525] pb-2 pt-4">
-                            <li class="mb-2 h-full w-full cursor-pointer p-2 hover:bg-gray-800">
+                            <li class="h-full w-full cursor-pointer p-2 hover:bg-gray-800">
                                 <NavLink href="barbearia/entrar" class="block h-full w-full text-base">Sou barbearia</NavLink>
                             </li>
                             <li class="w-full cursor-pointer p-2 hover:bg-gray-800">
+                                <NavLink href="barbeiro/entrar" class="text-base">Sou barbeiro</NavLink>
+                            </li>
+                            <li class="w-full mb-1 cursor-pointer p-2 hover:bg-gray-800">
                                 <NavLink class="text-base">Sou cliente</NavLink>
                             </li>
                         </ul>
