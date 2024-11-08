@@ -18,7 +18,7 @@ public class CreateBarberUseCaseFactory
 
         if (!string.IsNullOrWhiteSpace(email))
         {            
-            barberRepository.ExistsWithSameEmail(email, barberShop.Id);
+            barberRepository.ExistsWithSameEmail(email);
         }
 
         return new CreateBarberUseCase(barberRepository.Build(), loggedUser, logger, passwordHasher);

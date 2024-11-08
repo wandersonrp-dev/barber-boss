@@ -18,16 +18,16 @@ public class BarberRepository : IBarberRepository
 
         await context.AddAsync(barber);
 
-        await context.SaveChangesAsync();        
+        await context.SaveChangesAsync();                        
     }
 
-    public async Task<bool> ExistsWithSameEmail(string email, Guid barberShopId)
+    public async Task<bool> ExistsWithSameEmail(string email)
     {
         using var context = await _contextFactory.CreateDbContextAsync();        
 
         return await context.Barbers
             .AsNoTracking()
-            .AnyAsync(e => e.Email.Equals(email) && e.BarberShopId.Equals(barberShopId));        
+            .AnyAsync(e => e.Email.Equals(email));        
     }
 
     public async Task<List<Barber>> GetAllBarbersAsync(Guid barberShopId)
@@ -36,6 +36,9 @@ public class BarberRepository : IBarberRepository
 
         return await context.Barbers
             .AsNoTracking()
-            .Where(e => e.BarberShopId.Equals(barberShopId)).ToListAsync();
+            .Include(e => e.WorkBarbers)
+            .ThenInclude(e => e.BarberShop)
+            .Where(e => e.WorkBarbers.Any(wb => wb.BarberShopId == barberShopId))
+            .ToListAsync();
     }
 }
