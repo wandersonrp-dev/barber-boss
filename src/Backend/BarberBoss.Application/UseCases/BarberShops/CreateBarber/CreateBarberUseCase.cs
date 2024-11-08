@@ -42,7 +42,7 @@ public class CreateBarberUseCase : ICreateBarberUseCase
 
         var loggedUser = await _loggedUser.Get();
         
-        var barberExists = await _barberRepository.ExistsWithSameEmail(request.Email, loggedUser!.Id);
+        var barberExists = await _barberRepository.ExistsWithSameEmail(request.Email);
 
         if(barberExists)
         {
@@ -56,11 +56,13 @@ public class CreateBarberUseCase : ICreateBarberUseCase
             Name = request.Name,
             Email = request.Email,
             UserType = UserType.Barber,
-            Phone = request.Phone,
-            BarberShopId = loggedUser!.Id,            
-        };
+            Phone = request.Phone,    
+            UserStatus = UserStatus.Suspended,                                           
+        };        
 
         barber.Password = _passwordHasher.HashPassword(barber, request.Password);
+
+        barber.WorkBarbers = new List<WorkBarber>(){ new WorkBarber { BarberShopId = loggedUser!.Id } };
 
         await _barberRepository.AddAsync(barber);
 

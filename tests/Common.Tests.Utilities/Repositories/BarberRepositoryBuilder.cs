@@ -11,9 +11,9 @@ public class BarberRepositoryBuilder
         _repository = new Mock<IBarberRepository>();
     }
 
-    public BarberRepositoryBuilder ExistsWithSameEmail(string email, Guid id)
+    public BarberRepositoryBuilder ExistsWithSameEmail(string email)
     {
-        _repository.Setup(repository => repository.ExistsWithSameEmail(email, id)).ReturnsAsync(true);
+        _repository.Setup(repository => repository.ExistsWithSameEmail(email)).ReturnsAsync(true);
 
         return this;
     }
