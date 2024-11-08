@@ -1,5 +1,6 @@
 ﻿using BarberBoss.Application.UseCases.BarberShops.CreateBarber;
 using BarberBoss.Application.UseCases.BarberShops.DoLogin;
+using BarberBoss.Application.UseCases.BarberShops.GetAllBarbers;
 using BarberBoss.Application.UseCases.BarberShops.GetProfile;
 using BarberBoss.Application.UseCases.BarberShops.Register;
 using BarberBoss.Application.UseCases.BarberShops.Update;
@@ -140,5 +141,17 @@ public class BarberShopsController : ControllerBase
         }
 
         return CreatedAtAction(nameof(CreateBarber), result.Value);
+    }
+
+    [HttpGet]
+    [Authorize]
+    [Route("barber-shops/barbers")]
+    [ProducesResponseType(typeof(ResponseGetAllBarbersJson), StatusCodes.Status200OK)]    
+        
+    public async Task<ActionResult<ResponseCreateBarberJson>> GetAllBarbers([FromServices] IGetAllBarbersUseCase useCase)
+    {
+        var result = await useCase.Execute();        
+
+        return Ok(result.Value);
     }
 }
