@@ -19,4 +19,7 @@ public interface IBarberShopApi
 
     [Post("/api/barber-shops/barbers")]
     Task<IApiResponse> CreateBarber(RequestCreateBarberJson request);
+
+    [Get("/api/barber-shops/barbers")]
+    Task<IApiResponse<ResponseGetAllBarbersJson>> GetAllBarbers();
 }
