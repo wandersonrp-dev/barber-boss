@@ -1,23 +1,19 @@
 ﻿using BarberBoss.Communication.Requests.BarberShop;
 using BarberBoss.Domain.Entities;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
+using BarberBoss.Exception;
+using Common.Tests.Utilities.Requests.BarberShops;
+using FluentAssertions;
 using System.Net;
 using System.Text.Json;
-using FluentAssertions;
-using Common.Tests.Utilities.Requests.BarberShops;
-using BarberBoss.Exception;
 
 namespace WebApi.Tests.BarberShops.CreateBarber;
-public class CreateBarberTests : IClassFixture<CustomWebApplicationFactory>
-{
-    private readonly HttpClient _httpClient;
+public class CreateBarberTests : BarberBossClassFixture
+{    
     private const string METHOD = "api/barber-shops/barbers";
     private readonly BarberShop _barberShop;
 
-    public CreateBarberTests(CustomWebApplicationFactory webApplicationFactory)
-    {
-        _httpClient = webApplicationFactory.CreateClient();
+    public CreateBarberTests(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+    {        
         _barberShop = webApplicationFactory.GetBarberShop();
     }
 
@@ -26,7 +22,7 @@ public class CreateBarberTests : IClassFixture<CustomWebApplicationFactory>
     {
         var request = RequestCreateBarberJsonBuilder.Build();
 
-        var resultLogin = await _httpClient.PostAsJsonAsync("api/barber-shops/signin", new RequestBarberShopDoLoginJson
+        var resultLogin = await PostAsync("api/barber-shops/signin", new RequestBarberShopDoLoginJson
         {
             Email = _barberShop.Email,
             Password = _barberShop.Password,
@@ -38,11 +34,9 @@ public class CreateBarberTests : IClassFixture<CustomWebApplicationFactory>
 
         var responseLogin = await JsonDocument.ParseAsync(bodyLogin);
 
-        var token = responseLogin.RootElement.GetProperty("token").GetString();
+        var token = responseLogin.RootElement.GetProperty("token").GetString();        
 
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        var result = await _httpClient.PostAsJsonAsync(METHOD, request);
+        var result = await PostAsync(METHOD, request, token);
 
         result.StatusCode.Should().Be(HttpStatusCode.Created);
 
@@ -59,7 +53,7 @@ public class CreateBarberTests : IClassFixture<CustomWebApplicationFactory>
         var request = RequestCreateBarberJsonBuilder.Build();
         request.Name = string.Empty;
 
-        var resultLogin = await _httpClient.PostAsJsonAsync("api/barber-shops/signin", new RequestBarberShopDoLoginJson
+        var resultLogin = await PostAsync("api/barber-shops/signin", new RequestBarberShopDoLoginJson
         {
             Email = _barberShop.Email,
             Password = _barberShop.Password,
@@ -71,11 +65,9 @@ public class CreateBarberTests : IClassFixture<CustomWebApplicationFactory>
 
         var responseLogin = await JsonDocument.ParseAsync(bodyLogin);
 
-        var token = responseLogin.RootElement.GetProperty("token").GetString();
+        var token = responseLogin.RootElement.GetProperty("token").GetString();        
 
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        var result = await _httpClient.PostAsJsonAsync(METHOD, request);
+        var result = await PostAsync(METHOD, request, token);
 
         result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 
@@ -92,8 +84,8 @@ public class CreateBarberTests : IClassFixture<CustomWebApplicationFactory>
     public async Task Error_Barber_Already_Exists()
     {
         var request = RequestCreateBarberJsonBuilder.Build();      
-
-        var resultLogin = await _httpClient.PostAsJsonAsync("api/barber-shops/signin", new RequestBarberShopDoLoginJson
+        
+        var resultLogin = await PostAsync("api/barber-shops/signin", new RequestBarberShopDoLoginJson
         {
             Email = _barberShop.Email,
             Password = _barberShop.Password,
@@ -105,13 +97,11 @@ public class CreateBarberTests : IClassFixture<CustomWebApplicationFactory>
 
         var responseLogin = await JsonDocument.ParseAsync(bodyLogin);
 
-        var token = responseLogin.RootElement.GetProperty("token").GetString();
+        var token = responseLogin.RootElement.GetProperty("token").GetString();        
 
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        await PostAsync(METHOD, request, token);
 
-        await _httpClient.PostAsJsonAsync(METHOD, request);
-
-        var result = await _httpClient.PostAsJsonAsync(METHOD, request);
+        var result = await PostAsync(METHOD, request, token);
 
         result.StatusCode.Should().Be(HttpStatusCode.Conflict);
 

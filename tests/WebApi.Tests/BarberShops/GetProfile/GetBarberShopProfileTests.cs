@@ -2,44 +2,37 @@
 using BarberBoss.Domain.Entities;
 using FluentAssertions;
 using System.Net;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace WebApi.Tests.BarberShops.GetProfile;
-public class GetBarberShopProfileTests : IClassFixture<CustomWebApplicationFactory>
+public class GetBarberShopProfileTests : BarberBossClassFixture
 {
-    private const string METHOD = "api/barber-shops/profile";
-    private readonly HttpClient _httpClient;
+    private const string METHOD = "api/barber-shops/profile";    
     private readonly BarberShop _barberShop;
 
-
-    public GetBarberShopProfileTests(CustomWebApplicationFactory webApplicationFactory)
-    {
-        _httpClient = webApplicationFactory.CreateClient();
+    public GetBarberShopProfileTests(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory) 
+    {        
         _barberShop = webApplicationFactory.GetBarberShop();
     }
 
     [Fact]
     public async Task Success()
     {
-        var resultLogin = await _httpClient.PostAsJsonAsync("api/barber-shops/signin", new RequestBarberShopDoLoginJson
+        var resultLogin = await PostAsync("api/barber-shops/signin", new RequestBarberShopDoLoginJson
         {
             Email = _barberShop.Email,
             Password = _barberShop.Password,
         });
-
+         
         resultLogin.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var bodyLogin = await resultLogin.Content.ReadAsStreamAsync();
 
         var responseLogin = await JsonDocument.ParseAsync(bodyLogin);
 
-        var token = responseLogin.RootElement.GetProperty("token").GetString();
+        var token = responseLogin.RootElement.GetProperty("token").GetString();        
 
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        var result = await _httpClient.GetAsync(METHOD);
+        var result = await GetAsync(METHOD, token);
 
         result.StatusCode.Should().Be(HttpStatusCode.OK);
 

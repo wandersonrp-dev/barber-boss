@@ -1,19 +1,16 @@
-﻿using Common.Tests.Utilities.Requests.BarberShops;
-using System.Net.Http.Json;
+﻿using BarberBoss.Exception;
+using Common.Tests.Utilities.Requests.BarberShops;
+using FluentAssertions;
 using System.Net;
 using System.Text.Json;
-using FluentAssertions;
-using BarberBoss.Exception;
 
 namespace WebApi.Tests.BarberShops.DoLogin;
-public class BarberShopDoLoginTests : IClassFixture<CustomWebApplicationFactory>
+public class BarberShopDoLoginTests : BarberBossClassFixture
 {
-    private const string METHOD = "api/barber-shops/signin";
-    private readonly HttpClient _httpClient;        
+    private const string METHOD = "api/barber-shops/signin";    
 
-    public BarberShopDoLoginTests(CustomWebApplicationFactory webApplicationFactory)
-    {
-        _httpClient = webApplicationFactory.CreateClient();
+    public BarberShopDoLoginTests(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+    {        
     }
 
     [Fact]
@@ -21,14 +18,14 @@ public class BarberShopDoLoginTests : IClassFixture<CustomWebApplicationFactory>
     {
         var request = RequestRegisterBarberShopJsonBuilder.Build();
 
-        await _httpClient.PostAsJsonAsync("api/barber-shops/signup", request);
+        await PostAsync("api/barber-shops/signup", request);
 
         var loginRequest = RequestBarberShopDoLoginJsonBuilder.Build();
 
         loginRequest.Email = request.Email;
         loginRequest.Password = request.Password;
 
-        var result = await _httpClient.PostAsJsonAsync(METHOD, loginRequest);
+        var result = await PostAsync(METHOD, loginRequest);
 
         result.StatusCode.Should().Be(HttpStatusCode.OK);
 
@@ -44,14 +41,14 @@ public class BarberShopDoLoginTests : IClassFixture<CustomWebApplicationFactory>
     {
         var request = RequestRegisterBarberShopJsonBuilder.Build();
 
-        await _httpClient.PostAsJsonAsync("api/barber-shops/signup", request);
+        await PostAsync("api/barber-shops/signup", request);
 
         var loginRequest = RequestBarberShopDoLoginJsonBuilder.Build();
 
         loginRequest.Email = string.Empty;
         loginRequest.Password = request.Password;
 
-        var result = await _httpClient.PostAsJsonAsync(METHOD, loginRequest);
+        var result = await PostAsync(METHOD, loginRequest);
 
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 
