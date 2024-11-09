@@ -1,5 +1,6 @@
 using BarberBoss.Web;
 using BarberBoss.Web.Apis;
+using BarberBoss.Web.Apis.Barbers;
 using BarberBoss.Web.Apis.BarberShops;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -32,7 +33,11 @@ static void ConfigureRefit(IServiceCollection services, IConfiguration configura
 {
     var baseUrl = configuration.GetRequiredSection("Settings:BaseUrl").Value ?? string.Empty;    
 
-    services.AddRefitClient<IBarberShopApi>()
+    services.AddRefitClient<IBarberShopApi>()            
         .ConfigureHttpClient(httpClient => httpClient.BaseAddress = new Uri(baseUrl))
         .AddHttpMessageHandler<AuthHeaderHandler>();
+
+    services.AddRefitClient<IBarberApi>()
+        .ConfigureHttpClient(httpClient => httpClient.BaseAddress = new Uri(baseUrl))
+        .AddHttpMessageHandler<AuthHeaderHandler>();    
 }
