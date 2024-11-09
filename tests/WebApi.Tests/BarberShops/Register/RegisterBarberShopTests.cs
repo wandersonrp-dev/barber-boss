@@ -2,18 +2,15 @@
 using Common.Tests.Utilities.Requests.BarberShops;
 using FluentAssertions;
 using System.Net;
-using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace WebApi.Tests.BarberShops.Register;
-public class RegisterBarberShopTests : IClassFixture<CustomWebApplicationFactory>
+public class RegisterBarberShopTests : BarberBossClassFixture
 {
-    private const string METHOD = "api/barber-shops/signup";
-    private readonly HttpClient _httpClient;        
+    private const string METHOD = "api/barber-shops/signup";    
 
-    public RegisterBarberShopTests(CustomWebApplicationFactory webApplicationFactory)
-    {
-        _httpClient = webApplicationFactory.CreateClient();                
+    public RegisterBarberShopTests(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+    {       
     }
 
     [Fact]
@@ -21,7 +18,7 @@ public class RegisterBarberShopTests : IClassFixture<CustomWebApplicationFactory
     {
         var request = RequestRegisterBarberShopJsonBuilder.Build();
 
-        var result = await _httpClient.PostAsJsonAsync(METHOD, request);
+        var result = await PostAsync(METHOD, request);
         
         result.StatusCode.Should().Be(HttpStatusCode.Created);
 
@@ -38,7 +35,7 @@ public class RegisterBarberShopTests : IClassFixture<CustomWebApplicationFactory
         var request = RequestRegisterBarberShopJsonBuilder.Build();
         request.Name = string.Empty;
 
-        var result = await _httpClient.PostAsJsonAsync(METHOD, request);
+        var result = await PostAsync(METHOD, request);
 
         result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 
