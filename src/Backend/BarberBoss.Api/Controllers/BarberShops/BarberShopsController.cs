@@ -7,6 +7,7 @@ using BarberBoss.Application.UseCases.BarberShops.Update;
 using BarberBoss.Communication.Requests.BarberShop;
 using BarberBoss.Communication.Responses;
 using BarberBoss.Communication.Responses.BarberShop;
+using BarberBoss.Domain.Enums;
 using BarberBoss.Exception.ExceptionsBase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -68,7 +69,7 @@ public class BarberShopsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
+    [Authorize (Roles = nameof(UserType.BarberShop))]
     [Route("barber-shops/profile")]
     [ProducesResponseType(typeof(ResponseBarberShopJson), StatusCodes.Status200OK)]
     public async Task<ActionResult<ResponseBarberShopJson>> GetProfile([FromServices] IGetBarberShopProfileUseCase useCase)
@@ -90,7 +91,7 @@ public class BarberShopsController : ControllerBase
     }
 
     [HttpPatch]
-    [Authorize]
+    [Authorize(Roles = nameof(UserType.BarberShop))]
     [Route("barber-shops/profile")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
@@ -117,7 +118,7 @@ public class BarberShopsController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = nameof(UserType.BarberShop))]
     [Route("barber-shops/barbers")]
     [ProducesResponseType(typeof(ResponseCreateBarberJson), StatusCodes.Status201Created)]    
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
@@ -144,10 +145,9 @@ public class BarberShopsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
+    [Authorize(Roles = nameof(UserType.BarberShop))]
     [Route("barber-shops/barbers")]
-    [ProducesResponseType(typeof(ResponseGetAllBarbersJson), StatusCodes.Status200OK)]    
-        
+    [ProducesResponseType(typeof(ResponseGetAllBarbersJson), StatusCodes.Status200OK)]
     public async Task<ActionResult<ResponseCreateBarberJson>> GetAllBarbers([FromServices] IGetAllBarbersUseCase useCase)
     {
         var result = await useCase.Execute();        

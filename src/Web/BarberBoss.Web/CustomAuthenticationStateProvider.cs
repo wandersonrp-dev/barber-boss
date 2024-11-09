@@ -20,7 +20,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         var token = await _localStorage.GetItemAsync<string>("auth_token");
 
         if (string.IsNullOrWhiteSpace(token))
-            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));      
+            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
 
         return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt")));        
     }
@@ -51,23 +51,34 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         var claims = new List<Claim>();
         var payload = token.Split('.')[1];
         var jsonBytes = ParseBase64WithoutPadding(payload);
-        var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);        
+        var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
 
         if (keyValuePairs is null)
-            return claims;        
+            return claims;
 
         foreach (var kvp in keyValuePairs)
         {
             if (kvp.Value is JsonElement jsonElement && jsonElement.ValueKind == JsonValueKind.Array)
             {
                 foreach (var item in jsonElement.EnumerateArray())
-                {                    
+                {  
+                    if (kvp.Key == "role")
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, item.ToString()));
+                        continue;
+                    }
 
                     claims.Add(new Claim(kvp.Key, item.ToString()));
                 }
             }
             else
             {
+                if (kvp.Key == "role")
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, kvp.Value.ToString()!));
+                    continue;
+                }
+
                 claims.Add(new Claim(kvp.Key, kvp.Value.ToString()!));
             }
         }       
