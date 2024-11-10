@@ -25,7 +25,7 @@ public class BarberDoLoginUseCase : IBarberDoLoginUseCase
         _accessTokenGenerator = accessTokenGenerator;
     }
 
-    public async Task<CustomResult<ResponseBarberDoLoginJson>> Execute(ResquestBarberDoLoginJson request)
+    public async Task<CustomResult<ResponseBarberDoLoginJson>> Execute(RequestBarberDoLoginJson request)
     {
         var barber = await _barberRepository.GetByEmailAsync(request.Email);
 

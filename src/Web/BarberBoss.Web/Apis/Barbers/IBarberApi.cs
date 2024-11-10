@@ -7,5 +7,5 @@ namespace BarberBoss.Web.Apis.Barbers;
 public interface IBarberApi
 {
     [Post("/api/barbers/signin")]
-    Task<ApiResponse<ResponseBarberDoLoginJson>> SignIn(ResquestBarberDoLoginJson request);
+    Task<ApiResponse<ResponseBarberDoLoginJson>> SignIn(RequestBarberDoLoginJson request);
 }
