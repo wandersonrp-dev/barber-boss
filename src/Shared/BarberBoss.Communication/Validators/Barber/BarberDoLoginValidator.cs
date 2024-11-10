@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace BarberBoss.Communication.Validators.Barber;
 
-public class BarberDoLoginValidator : AbstractValidator<ResquestBarberDoLoginJson>
+public class BarberDoLoginValidator : AbstractValidator<RequestBarberDoLoginJson>
 {
     public BarberDoLoginValidator()
     {

@@ -17,7 +17,7 @@ public class BarbersController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<ResponseBarberDoLoginJson>> DoLogin(
         [FromServices] IBarberDoLoginUseCase useCase, 
-        [FromBody] ResquestBarberDoLoginJson request)
+        [FromBody] RequestBarberDoLoginJson request)
     {
         var result = await useCase.Execute(request);
 

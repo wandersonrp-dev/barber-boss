@@ -6,5 +6,5 @@ namespace BarberBoss.Application.UseCases.Barbers.DoLogin;
 
 public interface IBarberDoLoginUseCase
 {
-    Task<CustomResult<ResponseBarberDoLoginJson>> Execute(ResquestBarberDoLoginJson request);
+    Task<CustomResult<ResponseBarberDoLoginJson>> Execute(RequestBarberDoLoginJson request);
 }
