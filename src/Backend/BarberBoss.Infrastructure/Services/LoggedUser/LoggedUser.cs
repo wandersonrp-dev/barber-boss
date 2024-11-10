@@ -46,6 +46,12 @@ public class LoggedUser : ILoggedUser
                 .AsNoTracking()                
                 .First(e => e.Id == identifier && e.UserStatus == UserStatus.Active);
         }
+        else if(userRole == UserType.Barber)
+        {
+            return context.Barbers
+                .AsNoTracking()
+                .First(e => e.Id == identifier);
+        }
         else
             return null;
     }

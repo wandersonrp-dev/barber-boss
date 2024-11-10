@@ -50,4 +50,13 @@ public class BarberRepository : IBarberRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(e => e.Email.Equals(email));
     }
+
+    public async Task<Barber?> GetByIdAsync(Guid id)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+
+        return await context.Barbers
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == id);
+    }
 }

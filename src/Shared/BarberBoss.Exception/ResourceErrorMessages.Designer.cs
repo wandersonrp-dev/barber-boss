@@ -70,6 +70,15 @@ namespace BarberBoss.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Barbeiro não encontrado.
+        /// </summary>
+        public static string BARBER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("BARBER_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Barbearia já existe em nossa base de dados.
         /// </summary>
         public static string BARBER_SHOP_ALREADY_EXISTS {

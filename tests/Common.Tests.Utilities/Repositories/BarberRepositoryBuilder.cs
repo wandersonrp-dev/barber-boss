@@ -26,5 +26,12 @@ public class BarberRepositoryBuilder
         return this;
     }
 
+    public BarberRepositoryBuilder GetByIdAsync(Barber barber)
+    {
+        _repository.Setup(repository => repository.GetByIdAsync(barber.Id)).ReturnsAsync(barber);
+
+        return this;
+    }
+
     public IBarberRepository Build() => _repository.Object;
 }

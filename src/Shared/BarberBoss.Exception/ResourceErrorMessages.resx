@@ -168,4 +168,7 @@
   <data name="BARBER_ALREADY_EXISTS" xml:space="preserve">
     <value>Barbeiro já cadastrado</value>
   </data>
+  <data name="BARBER_NOT_FOUND" xml:space="preserve">
+    <value>Barbeiro não encontrado</value>
+  </data>
 </root>
