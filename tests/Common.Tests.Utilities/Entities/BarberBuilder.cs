@@ -14,6 +14,6 @@ public class BarberBuilder
             .RuleFor(bs => bs.Email, (faker, bs) => faker.Internet.Email(firstName: bs.Name))
             .RuleFor(bs => bs.Phone, faker => faker.Phone.PhoneNumber("###########"))            
             .RuleFor(bs => bs.Password, (faker, bs) => new PasswordHasherBuilder<Barber>(bs).Build().HashPassword(bs, bs.Password))
-            .RuleFor(bs => bs.UserType, () => UserType.BarberShop);
+            .RuleFor(bs => bs.UserType, () => UserType.Barber);
     }
 }

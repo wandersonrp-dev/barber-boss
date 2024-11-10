@@ -1,11 +1,9 @@
-﻿using BarberBoss.Exception.ExceptionsBase;
-using BarberBoss.Exception;
+﻿using BarberBoss.Exception;
+using BarberBoss.Exception.ExceptionsBase;
 using Common.Tests.Utilities.Entities;
 using Common.Tests.Utilities.Requests.Barbers;
-using Common.Tests.Utilities.Requests.BarberShops;
 using FluentAssertions;
 using UseCases.Tests.UseCaseFactories.Barbers;
-using UseCases.Tests.UseCaseFactories.BarberShops;
 
 namespace UseCases.Tests.Barbers.DoLogin;
 public class BarberDoLoginUseCaseTests
