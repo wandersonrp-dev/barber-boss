@@ -1,4 +1,5 @@
 using BarberBoss.Application.UseCases.Barbers.DoLogin;
+using BarberBoss.Application.UseCases.Barbers.GetProfile;
 using BarberBoss.Communication.Requests.Barber;
 using BarberBoss.Communication.Responses;
 using BarberBoss.Communication.Responses.Barber;
@@ -33,5 +34,28 @@ public class BarbersController : ControllerBase
         }
 
         return Ok(result.Value);
-    } 
+    }
+
+    [HttpGet]
+    [Route("barbers/profile")]
+    [ProducesResponseType(typeof(ResponseBarberJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<ResponseBarberJson>> GetProfile(
+        [FromServices] IGetBarberProfileUseCase useCase)
+    {
+        var result = await useCase.Execute();
+
+        if (result.IsFailure)
+        {
+            var error = result.Error;
+
+            return error.Code switch
+            {
+                nameof(ErrorCodes.NotFound) => NotFound(new ResponseErrorJson(error.Message!)),
+                _ => BadRequest(),
+            };
+        }
+
+        return Ok(result.Value);
+    }
 }
