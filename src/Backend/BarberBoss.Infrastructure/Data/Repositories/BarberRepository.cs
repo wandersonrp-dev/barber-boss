@@ -59,4 +59,15 @@ public class BarberRepository : IBarberRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(e => e.Id == id);
     }
+
+    public async Task<bool> UpdateAsync(Barber barber)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+
+        context.Barbers.Update(barber);
+
+        var result = await context.SaveChangesAsync();
+
+        return result > 0;
+    }
 }
