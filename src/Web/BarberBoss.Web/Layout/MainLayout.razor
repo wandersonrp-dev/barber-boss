@@ -3,8 +3,13 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
 @inject IJSRuntime Js
+@inject ILocalStorageService LocalStorageService
 
-<AuthorizeView>
+<AuthorizeView> 
+    @if (!_changedPassword)
+    {
+        <BarberChangedPasswordModal />
+    }
     <div class="flex h-screen">   
         <NavMenu />
         <main class="flex-1">
@@ -41,7 +46,7 @@
                 </header>
             </div>
             <CascadingValue Value="User">                
-                <article class="">                    
+                <article class="">                                        
                     @Body
                 </article>
             </CascadingValue>
@@ -49,11 +54,11 @@
     </div>
 </AuthorizeView>
 
-
 @code {
     private bool _isProfileDropdownOpen;
 
     public ClaimsPrincipal User { get; set; } = default!;
+    private bool _changedPassword;
 
     protected override async Task OnInitializedAsync()
     {        
@@ -63,14 +68,18 @@
         if (!User.Identity!.IsAuthenticated)
         {
             NavigationManager.NavigateTo("/");
-        }
+        }        
+        else
+        {
+            _changedPassword = bool.Parse(User.Claims.FirstOrDefault(claim => claim.Type == "ChangedInitialPassword")!.Value);
+        }        
     }
 
     private void ShowProfileDropDown() => _isProfileDropdownOpen = !_isProfileDropdownOpen;
 
     private void GoToProfile()
     {
-        var userType = User.Claims.FirstOrDefault(claim => claim.Type == "role")!.Value;
+        var userType = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)!.Value;
 
         if (userType is not null && Enum.TryParse<UserType>(userType, out var userRole))
         {
@@ -79,7 +88,7 @@
             else if (userRole == UserType.Customer)
                 NavigationManager.NavigateTo("/auth/entrar");
             else
-                NavigationManager.NavigateTo("/auth/entrar");
+                NavigationManager.NavigateTo("/barbeiro/perfil");
         }
     }
 

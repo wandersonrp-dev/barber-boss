@@ -43,7 +43,7 @@ public class BarberDoLoginUseCase : IBarberDoLoginUseCase
             return CustomResult<ResponseBarberDoLoginJson>.Failure(CustomError.InvalidCredential());
         }
         
-        var token = _accessTokenGenerator.GenerateToken(barber.Id, barber.Name, barber.Email, barber.UserType);
+        var token = _accessTokenGenerator.GenerateToken(barber.Id, barber.Name, barber.Email, barber.UserType, barber.ChangedInitialPassword);
 
         return CustomResult<ResponseBarberDoLoginJson>.Success(new ResponseBarberDoLoginJson
         {

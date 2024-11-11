@@ -8,4 +8,7 @@ public interface IBarberApi
 {
     [Post("/api/barbers/signin")]
     Task<ApiResponse<ResponseBarberDoLoginJson>> SignIn(RequestBarberDoLoginJson request);
+
+    [Get("/api/barbers/profile")]
+    Task<ApiResponse<ResponseBarberJson>> GetProfile();
 }

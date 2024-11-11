@@ -17,7 +17,7 @@ public class JwtTokenGenerator : IAccessTokenGenerator
         _signingKey = signingKey;
     }
 
-    public string GenerateToken(Guid id, string name, string email, UserType userType)
+    public string GenerateToken(Guid id, string name, string email, UserType userType, bool changedInitialPassword = true)
     {
         var claims = new List<Claim>
         {
@@ -25,6 +25,7 @@ public class JwtTokenGenerator : IAccessTokenGenerator
             new Claim(ClaimTypes.Name, name),
             new Claim(ClaimTypes.Email, email),
             new Claim(ClaimTypes.Role, userType.ToString()),
+            new Claim("ChangedInitialPassword", changedInitialPassword.ToString()),
         };
 
         var tokenDescriptor = new SecurityTokenDescriptor
