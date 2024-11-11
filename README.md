@@ -7,5 +7,6 @@
     <br />
  </div>
 
- <h3>Descrição do Projeto</h3>
- <p>O Barber Boss é um projeto desafio do curso de formação C# / .Net da RocketSeat. O objetivo é criar uma API para gerenciamento e controle de agendamento de horários e serviços de uma barbearia.</p>
+ <h3>Descrição do Projeto:</h3>
+ <p>O Barber Boss é um projeto que une os profissionais barbeiros, barbearias e clientes.</p>
+ <p>O Barber Boss permite que a barbearia disponibilize horários para barbeiros em modelo freelancer realizar o serviço em suas dependências e também gerencie o empreendimento com fluxo de caixa.</p>
