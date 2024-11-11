@@ -1,6 +1,7 @@
 ﻿using BarberBoss.Communication.Requests.Barber;
 using BarberBoss.Communication.Validators.Barber;
 using BarberBoss.Domain.Entities;
+using BarberBoss.Domain.Enums;
 using BarberBoss.Domain.Repositories;
 using BarberBoss.Domain.Services.LoggedUser;
 using BarberBoss.Exception;
@@ -84,6 +85,7 @@ public class UpdateBarberUseCase : IUpdateBarberUseCase
         {
             barber.Password = _passwordHasher.HashPassword(barber, request.Password);
             barber.ChangedInitialPassword = true;
+            barber.UserStatus = UserStatus.Active;
         }            
     }
 }

@@ -5,6 +5,7 @@
 @inject IBarberApi BarberApi
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IJSRuntime JS
+@inject ILocalStorageService LocalStorageService
 
 <PageTitle>Perfil do(a) Barbeiro(a) - Barber Boss</PageTitle>
 
@@ -95,49 +96,50 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await GetProfile();
+        await GetProfile();        
     }
 
     private async Task Submit()
     {
-        
-    }
+        _isLoading = true;
 
-    // private async Task Submit()
-    // {
-    //     _isLoading = true;
+        try
+        {
+            await GetInputPhoneOut();
 
-    //     try
-    //     {
-    //         await GetInputPhoneOut();
+            var result = await BarberApi.UpdateProfile(new RequestBarberJson
+            {
+                Email = _barber.Email,
+                Name = _barber.Name,
+                Phone = _inputPhoneOut,
+                Password = !string.IsNullOrWhiteSpace(_barber.Password) ? _barber.Password : string.Empty,
+            });
 
-    //         var result = await BarberApi.UpdateProfile(new RequestBarberJson
-    //             {
-    //                 Name = _barber.Name,
-    //                 Email = _barber.Email,
-    //                 Phone = _inputPhoneOut,                    
-    //                 Password = !string.IsNullOrWhiteSpace(_barber.Password) ? _barber.Password : string.Empty,
-    //             });
+            if(result.IsSuccessStatusCode)
+            {
+                if(!string.IsNullOrWhiteSpace(_barber.Password))
+                {
+                    var value = bool.Parse(User!.Claims.FirstOrDefault(claim => claim.Type == "ChangedInitialPassword")!.Value);
+                    await LocalStorageService.SetItemAsync<bool>("cip", true);
+                }
 
-    //         if (result.IsSuccessStatusCode)
-    //         {
-    //             _success = true;
-    //             _isLoading = false;
-    //             StateHasChanged();
-    //             await Task.Delay(TimeSpan.FromSeconds(2));
-    //         }
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Console.WriteLine(ex.Message);
-    //     }
-    //     finally
-    //     {
-    //         _isLoading = false;
-    //         _success = false;
-    //         StateHasChanged();
-    //     }
-    // }
+                _success = true;
+                _isLoading = false;
+                StateHasChanged();
+                await Task.Delay(TimeSpan.FromSeconds(2));
+            }
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            _isLoading = false;
+            _success = false;
+            StateHasChanged();            
+        }
+    }   
 
     private async Task GetProfile()
     {

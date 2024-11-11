@@ -71,7 +71,12 @@
         }        
         else
         {
-            _changedPassword = bool.Parse(User.Claims.FirstOrDefault(claim => claim.Type == "ChangedInitialPassword")!.Value);
+            var cip = await LocalStorageService.GetItemAsync<bool?>("cip");
+
+            if(cip is not null)            
+                _changedPassword = cip.Value;            
+            else
+                _changedPassword = bool.Parse(User.Claims.FirstOrDefault(claim => claim.Type == "ChangedInitialPassword")!.Value);
         }        
     }
 

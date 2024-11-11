@@ -11,4 +11,7 @@ public interface IBarberApi
 
     [Get("/api/barbers/profile")]
     Task<ApiResponse<ResponseBarberJson>> GetProfile();
+
+    [Patch("/api/barbers/profile")]
+    Task<IApiResponse> UpdateProfile(RequestBarberJson request);
 }
