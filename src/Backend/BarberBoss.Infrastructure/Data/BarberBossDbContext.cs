@@ -12,6 +12,7 @@ public class BarberBossDbContext : DbContext
     public DbSet<BarberShop> BarberShops { get; set; }
     public DbSet<Barber> Barbers { get; set; }
     public DbSet<WorkBarber> WorkBarbers { get; set; }
+    public DbSet<OpeningHour> OpeningHours { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -49,6 +50,13 @@ public class BarberBossDbContext : DbContext
                 .WithOne(e => e.Barber)
                 .HasForeignKey(e => e.BarberId)
                 .OnDelete(DeleteBehavior.Cascade);    
+        });
+
+        modelBuilder.Entity<OpeningHour>(entity =>
+        {
+            entity.HasOne(e => e.BarberShop)
+                .WithMany(e => e.OpeningHours)
+                .HasForeignKey(e => e.BarberShopId);
         });
     }
 }

@@ -3,17 +3,20 @@ using System;
 using BarberBoss.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace BarberBoss.Infrastructure.Data.Migrations
+namespace BarberBoss.Infrastructure.Backend.BarberBoss.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BarberBossDbContext))]
-    partial class BarberBossDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241111175923_AddOpeningHours")]
+    partial class AddOpeningHours
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
