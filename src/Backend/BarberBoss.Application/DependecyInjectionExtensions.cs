@@ -1,5 +1,6 @@
 ﻿using BarberBoss.Application.UseCases.Barbers.DoLogin;
 using BarberBoss.Application.UseCases.Barbers.GetProfile;
+using BarberBoss.Application.UseCases.Barbers.Update;
 using BarberBoss.Application.UseCases.BarberShops.CreateBarber;
 using BarberBoss.Application.UseCases.BarberShops.DoLogin;
 using BarberBoss.Application.UseCases.BarberShops.GetAllBarbers;
@@ -29,7 +30,8 @@ public static class DependecyInjectionExtensions
             .AddScoped<ICreateBarberUseCase, CreateBarberUseCase>()
             .AddScoped<IGetAllBarbersUseCase, GetAllBarbersUseCase>()
             .AddScoped<IBarberDoLoginUseCase, BarberDoLoginUseCase>()
-            .AddScoped<IGetBarberProfileUseCase, GetBarberProfileUseCase>();
+            .AddScoped<IGetBarberProfileUseCase, GetBarberProfileUseCase>()
+            .AddScoped<IUpdateBarberUseCase, UpdateBarberUseCase>();
     }
 
     private static void AddPasswordHasher(IServiceCollection services)

@@ -8,4 +8,5 @@ public interface IBarberRepository
     Task<Barber?> GetByEmailAsync(string email);
     Task<List<Barber>> GetAllBarbersAsync(Guid barberShopId);
     Task<Barber?> GetByIdAsync(Guid id);
+    Task<bool> UpdateAsync(Barber barber);
 }

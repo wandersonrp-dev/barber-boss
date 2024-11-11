@@ -10,8 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace WebApi.Tests;
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
-    private BarberShop _barberShop;    
-    private Barber _barber;    
+    private BarberShop _barberShop = new();    
+    private Barber _barber = new();    
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {        
