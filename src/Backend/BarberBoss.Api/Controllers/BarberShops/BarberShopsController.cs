@@ -1,4 +1,5 @@
 ﻿using BarberBoss.Application.UseCases.BarberShops.CreateBarber;
+using BarberBoss.Application.UseCases.BarberShops.CreateOpeningHour;
 using BarberBoss.Application.UseCases.BarberShops.DoLogin;
 using BarberBoss.Application.UseCases.BarberShops.GetAllBarbers;
 using BarberBoss.Application.UseCases.BarberShops.GetProfile;
@@ -153,5 +154,36 @@ public class BarberShopsController : ControllerBase
         var result = await useCase.Execute();        
 
         return Ok(result.Value);
+    }
+
+    [HttpPost]
+    [Authorize(Roles = nameof(UserType.BarberShop))]
+    [Route("barber-shops/opening-hour")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status409Conflict)]
+    public async Task<ActionResult> CreateOpeningHour([FromServices] ICreateOpeningHourUseCase useCase, [FromBody] RequestCreateOpeningHourJson request)
+    {
+        var result = await useCase.Execute(request);
+
+        if (result.IsFailure)
+        {
+            var error = result.Error;
+
+            return error.Code switch
+            {
+                nameof(ErrorCodes.Conflict) => Conflict(new ResponseErrorJson(error.Message!)),
+                nameof(ErrorCodes.NotFound) => Conflict(new ResponseErrorJson(error.Message!)),
+                nameof(ErrorCodes.ErrorOnValidation) => BadRequest(new ResponseErrorJson(error.Messages!)),
+                _ => BadRequest(),
+            };
+        }
+
+        return CreatedAtAction(nameof(CreateOpeningHour), new
+        {
+            isCreated = result.Value,
+        });
+
     }
 }

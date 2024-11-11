@@ -171,4 +171,7 @@
   <data name="BARBER_NOT_FOUND" xml:space="preserve">
     <value>Barbeiro não encontrado</value>
   </data>
+  <data name="INVALID_START_DATE" xml:space="preserve">
+    <value>A data de início não pode ser menor que a data atual</value>
+  </data>
 </root>

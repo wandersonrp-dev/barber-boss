@@ -34,7 +34,8 @@ public static class DependecyInjectionExtensions
     {
         services
             .AddScoped<IBarberShopRepository, BarberShopRepository>()
-            .AddScoped<IBarberRepository, BarberRepository>();
+            .AddScoped<IBarberRepository, BarberRepository>()
+            .AddScoped<IOpeningHourRepository, OpeningHourRepository>();
     }
     
     private static void AddToken(IServiceCollection services, IConfiguration configuration)
