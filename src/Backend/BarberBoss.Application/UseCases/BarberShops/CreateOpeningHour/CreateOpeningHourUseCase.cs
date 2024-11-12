@@ -18,7 +18,7 @@ public class CreateOpeningHourUseCase : ICreateOpeningHourUseCase
     public CreateOpeningHourUseCase(
         IBarberShopRepository barberShopRepository,
         IOpeningHourRepository openingHourRepository,
-        ILogger<CreateOpeningHourUseCase> logger, 
+        ILogger<CreateOpeningHourUseCase> logger,
         ILoggedUser loggedUser)
     {
         _barberShopRepository = barberShopRepository;
@@ -31,7 +31,7 @@ public class CreateOpeningHourUseCase : ICreateOpeningHourUseCase
     {
         var validationResult = Validate(request);
 
-        if(validationResult.Code == nameof(ErrorCodes.ErrorOnValidation))
+        if (validationResult.Code == nameof(ErrorCodes.ErrorOnValidation))
         {
             return CustomResult<bool>.Failure(validationResult);
         }
@@ -39,44 +39,53 @@ public class CreateOpeningHourUseCase : ICreateOpeningHourUseCase
         var loggedUser = await _loggedUser.Get();
 
         var barberShop = await _barberShopRepository.GetByIdAsync(loggedUser!.Id);
-        
-        if(barberShop is null)
+
+        if (barberShop is null)
         {
             return CustomResult<bool>.Failure(CustomError.NotFound(ResourceErrorMessages.BARBER_SHOP_NOT_FOUND));
         }
 
-        var openingHourExists = await _openingHourRepository.ExistsByStartAndEndDate(request.StartDate, request.EndDate, loggedUser.Id);
+        List<OpeningHour> openingHours = []; 
 
-        if (openingHourExists)
+        foreach (var openingHour in request.OpeningHours)
         {
-            return CustomResult<bool>.Failure(CustomError.Conflict(ResourceErrorMessages.OPENING_HOUR_ALREADY_EXISTS));
+            var openingHourExists = await _openingHourRepository.ExistsByStartAndEndDate(openingHour.StartDate, openingHour.EndDate, loggedUser.Id);
+
+            if (openingHourExists)
+            {
+                return CustomResult<bool>.Failure(CustomError.Conflict(ResourceErrorMessages.OPENING_HOUR_ALREADY_EXISTS));
+            }            
+
+            openingHours.Add(new OpeningHour
+            {
+                StartDate = openingHour.StartDate,
+                EndDate = openingHour.EndDate,
+                BarberShopId = loggedUser.Id,
+                Reserved = openingHour.Reserved,
+            });            
         }
 
-        var openingHour = new OpeningHour
-        {
-            StartDate = request.StartDate,
-            EndDate = request.EndDate,
-            BarberShopId = loggedUser!.Id,     
-            Reserved = request.Reserved,
-        };
-
-        await _openingHourRepository.AddAsync(openingHour);
+        await _openingHourRepository.AddManyAsync(openingHours);
 
         return CustomResult<bool>.Success(true);
     }
 
     private static CustomError Validate(RequestCreateOpeningHourJson request)
     {
-        var validator = new CreateOpeningHourValidator();
-        var result = validator.Validate(request);
+        var validator = new CreateOpeningHourValidator();                
 
-        if(!result.IsValid)
+        foreach (var openingHour in request.OpeningHours)
         {
-            var errorMessage = result.Errors.Select(error => error.ErrorMessage).ToList();
+            var result = validator.Validate(openingHour);
 
-            return CustomError.ErrorOnValidation(errorMessage);
-        }
+            if (!result.IsValid)
+            {                
+                var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
+
+                return CustomError.ErrorOnValidation(errorMessages);
+            }            
+        }        
 
         return CustomError.None;
     }
-}
+}    

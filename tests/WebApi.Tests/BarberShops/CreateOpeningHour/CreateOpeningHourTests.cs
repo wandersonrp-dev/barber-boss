@@ -35,7 +35,9 @@ public class CreateOpeningHourTests : BarberBossClassFixture
 
         var token = responseLogin.RootElement.GetProperty("token").GetString();
 
-        var request = RequestCreateOpeningHourJsonBuilder.Build();
+        var collection = RequestCreateOpeningHourJsonBuilder.Collection();
+
+        var request = RequestCreateOpeningHourJsonBuilder.Build(collection);
 
         var result = await PostAsync(METHOD, request, token);
 
@@ -65,8 +67,9 @@ public class CreateOpeningHourTests : BarberBossClassFixture
 
         var token = responseLogin.RootElement.GetProperty("token").GetString();
 
-        var request = RequestCreateOpeningHourJsonBuilder.Build();
-        request.StartDate = DateTime.UtcNow.AddDays(-1);
+        var collection = RequestCreateOpeningHourJsonBuilder.Collection(startDate: DateTime.UtcNow.AddDays(-1));
+
+        var request = RequestCreateOpeningHourJsonBuilder.Build(collection);        
 
         var result = await PostAsync(METHOD, request, token);
 
@@ -98,7 +101,9 @@ public class CreateOpeningHourTests : BarberBossClassFixture
 
         var token = responseLogin.RootElement.GetProperty("token").GetString();
 
-        var request = RequestCreateOpeningHourJsonBuilder.Build();        
+        var collection = RequestCreateOpeningHourJsonBuilder.Collection(); 
+
+        var request = RequestCreateOpeningHourJsonBuilder.Build(collection);        
 
         await PostAsync(METHOD, request, token);
 
