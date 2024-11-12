@@ -221,5 +221,32 @@ namespace BarberBoss.Exception {
                 return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A data de início não pode ser menor que a data atual.
+        /// </summary>
+        public static string INVALID_START_DATE {
+            get {
+                return ResourceManager.GetString("INVALID_START_DATE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Data de fim não pode ser menor que a data de início.
+        /// </summary>
+        public static string INVALID_END_DATE {
+            get {
+                return ResourceManager.GetString("INVALID_END_DATE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Horário já foi cadastrado.
+        /// </summary>
+        public static string OPENING_HOUR_ALREADY_EXISTS {
+            get {
+                return ResourceManager.GetString("OPENING_HOUR_ALREADY_EXISTS", resourceCulture);
+            }
+        }
     }
 }

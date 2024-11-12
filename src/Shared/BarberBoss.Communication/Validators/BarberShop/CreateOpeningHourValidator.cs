@@ -1,4 +1,5 @@
 ﻿using BarberBoss.Communication.Requests.BarberShop;
+using BarberBoss.Exception;
 using FluentValidation;
 
 namespace BarberBoss.Communication.Validators.BarberShop;
@@ -6,11 +7,12 @@ public class CreateOpeningHourValidator : AbstractValidator<RequestCreateOpening
 {
     public CreateOpeningHourValidator()
     {
-        RuleFor(x => x.StartDate).Cascade(CascadeMode.Stop).LessThan(DateTime.UtcNow).WithMessage("data/hora de início não pode ser menor que a data/hora atual");
+        RuleFor(x => x.StartDate)            
+            .GreaterThan(DateTime.UtcNow)
+            .WithMessage(ResourceErrorMessages.INVALID_START_DATE);
 
-        When(x => x.StartDate >= DateTime.UtcNow, () =>
-        {
-            RuleFor(x => x.StartDate).GreaterThan(x => x.EndDate).WithMessage("data/hora de início não pode ser maior que a data/final");
-        });
+        RuleFor(x => x.EndDate)
+            .GreaterThan(x => x.StartDate)
+            .WithMessage(ResourceErrorMessages.INVALID_END_DATE);
     }
 }
