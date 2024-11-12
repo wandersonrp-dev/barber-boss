@@ -158,7 +158,7 @@ public class BarberShopsController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = nameof(UserType.BarberShop))]
-    [Route("barber-shops/opening-hour")]
+    [Route("barber-shops/opening-hours")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
@@ -174,7 +174,7 @@ public class BarberShopsController : ControllerBase
             return error.Code switch
             {
                 nameof(ErrorCodes.Conflict) => Conflict(new ResponseErrorJson(error.Message!)),
-                nameof(ErrorCodes.NotFound) => Conflict(new ResponseErrorJson(error.Message!)),
+                nameof(ErrorCodes.NotFound) => NotFound(new ResponseErrorJson(error.Message!)),
                 nameof(ErrorCodes.ErrorOnValidation) => BadRequest(new ResponseErrorJson(error.Messages!)),
                 _ => BadRequest(),
             };
