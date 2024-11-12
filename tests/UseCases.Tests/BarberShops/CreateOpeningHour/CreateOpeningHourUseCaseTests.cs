@@ -13,7 +13,9 @@ public class CreateOpeningHourUseCaseTests
     public async Task Success()
     {
         var loggedUser = BarberShopBuilder.Build();
-        var request = RequestCreateOpeningHourJsonBuilder.Build();
+        var collection = RequestCreateOpeningHourJsonBuilder.Collection();
+
+        var request = RequestCreateOpeningHourJsonBuilder.Build(collection);   
 
         var useCase = CreateOpeningHourUseCaseFactory.CreateUseCase(loggedUser);
 
@@ -26,7 +28,9 @@ public class CreateOpeningHourUseCaseTests
     public async Task Error_Invalid_Start_Date()
     {
         var loggedUser = BarberShopBuilder.Build();
-        var request = RequestCreateOpeningHourJsonBuilder.Build(startDate: DateTime.Now.AddDays(-1));
+        var collection = RequestCreateOpeningHourJsonBuilder.Collection(startDate: DateTime.UtcNow.AddDays(-1));
+
+        var request = RequestCreateOpeningHourJsonBuilder.Build(collection);
 
         var useCase = CreateOpeningHourUseCaseFactory.CreateUseCase(loggedUser);
 
@@ -41,7 +45,9 @@ public class CreateOpeningHourUseCaseTests
     public async Task Error_Barber_Shop_Not_Found()
     {
         var loggedUser = BarberShopBuilder.Build();
-        var request = RequestCreateOpeningHourJsonBuilder.Build();
+        var collection = RequestCreateOpeningHourJsonBuilder.Collection();
+
+        var request = RequestCreateOpeningHourJsonBuilder.Build(collection);
 
         var useCase = CreateOpeningHourUseCaseFactory.CreateUseCase(loggedUser, barberShopExists: false);
 

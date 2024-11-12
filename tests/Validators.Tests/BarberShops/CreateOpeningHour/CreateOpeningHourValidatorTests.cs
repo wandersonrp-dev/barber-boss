@@ -11,24 +11,35 @@ public class CreateOpeningHourValidatorTests
     {
         var validator = new CreateOpeningHourValidator();
 
-        var request = RequestCreateOpeningHourJsonBuilder.Build();
+        var collection = RequestCreateOpeningHourJsonBuilder.Collection();
 
-        var result = validator.Validate(request);
+        var request = RequestCreateOpeningHourJsonBuilder.Build(collection);
 
-        result.IsValid.Should().BeTrue();
-    }    
+        foreach (var openingHour in request.OpeningHours)
+        {
+            var result = validator.Validate(openingHour);
+
+            result.IsValid.Should().BeTrue();
+        }
+    }
 
     [Fact]
     public void Error_Invalid_Start_Date()
     {
         var validator = new CreateOpeningHourValidator();
 
-        var request = RequestCreateOpeningHourJsonBuilder.Build(startDate: DateTime.UtcNow.AddDays(-1));
+        var collection = RequestCreateOpeningHourJsonBuilder.Collection(startDate: DateTime.UtcNow.AddMinutes(-5));
 
-        var result = validator.Validate(request);
+        var request = RequestCreateOpeningHourJsonBuilder.Build(collection);
 
-        result.IsValid.Should().BeFalse();
-        result.Errors.Should().ContainSingle().And.Contain(error => error.ErrorMessage.Equals(ResourceErrorMessages.INVALID_START_DATE));
+        foreach (var openingHour in request.OpeningHours)
+        {
+            var result = validator.Validate(openingHour);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().ContainSingle().And.Contain(error => error.ErrorMessage.Equals(ResourceErrorMessages.INVALID_START_DATE));
+        }
+
     }
 
     [Fact]
@@ -36,11 +47,16 @@ public class CreateOpeningHourValidatorTests
     {
         var validator = new CreateOpeningHourValidator();
 
-        var request = RequestCreateOpeningHourJsonBuilder.Build(startDate: DateTime.UtcNow.AddMinutes(5), endDate: DateTime.UtcNow.AddMinutes(-50));
+        var collection = RequestCreateOpeningHourJsonBuilder.Collection(startDate: DateTime.UtcNow.AddMinutes(5), endDate: DateTime.UtcNow.AddMinutes(-50));
 
-        var result = validator.Validate(request);
+        var request = RequestCreateOpeningHourJsonBuilder.Build(collection);
 
-        result.IsValid.Should().BeFalse();
-        result.Errors.Should().ContainSingle().And.Contain(error => error.ErrorMessage.Equals(ResourceErrorMessages.INVALID_END_DATE));
+        foreach(var openingHour in request.OpeningHours)
+        {
+            var result = validator.Validate(openingHour);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().ContainSingle().And.Contain(error => error.ErrorMessage.Equals(ResourceErrorMessages.INVALID_END_DATE));
+        }                        
     }
 }

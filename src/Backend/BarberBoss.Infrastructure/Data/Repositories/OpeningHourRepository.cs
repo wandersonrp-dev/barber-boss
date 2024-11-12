@@ -21,6 +21,15 @@ public class OpeningHourRepository : IOpeningHourRepository
         await context.SaveChangesAsync();
     }
 
+    public async Task AddManyAsync(List<OpeningHour> openingHours)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+
+        await context.OpeningHours.AddRangeAsync(openingHours);
+
+        await context.SaveChangesAsync();
+    }
+
     public async Task<bool> ExistsByStartAndEndDate(DateTime startDate, DateTime endDate, Guid barberShopId)
     {
         using var context = await _contextFactory.CreateDbContextAsync();

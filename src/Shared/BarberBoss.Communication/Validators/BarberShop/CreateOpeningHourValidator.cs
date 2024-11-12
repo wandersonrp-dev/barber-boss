@@ -1,9 +1,9 @@
-﻿using BarberBoss.Communication.Requests.BarberShop;
+﻿using BarberBoss.Communication.Requests;
 using BarberBoss.Exception;
 using FluentValidation;
 
 namespace BarberBoss.Communication.Validators.BarberShop;
-public class CreateOpeningHourValidator : AbstractValidator<RequestCreateOpeningHourJson>
+public class CreateOpeningHourValidator : AbstractValidator<RequestDateJson>
 {
     public CreateOpeningHourValidator()
     {

@@ -22,4 +22,7 @@ public interface IBarberShopApi
 
     [Get("/api/barber-shops/barbers")]
     Task<IApiResponse<ResponseGetAllBarbersJson>> GetAllBarbers();
+
+    [Post("/api/barber-shops/opening-hours")]
+    Task<IApiResponse<ResponseGetAllBarbersJson>> CreateOpeningHours(RequestCreateOpeningHourJson request);
 }
