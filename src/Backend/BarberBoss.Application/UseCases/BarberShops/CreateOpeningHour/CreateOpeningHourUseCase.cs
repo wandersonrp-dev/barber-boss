@@ -49,7 +49,7 @@ public class CreateOpeningHourUseCase : ICreateOpeningHourUseCase
 
         if (openingHourExists)
         {
-            return CustomResult<bool>.Failure(CustomError.Conflict("horário já foi criado ** criar error resource"));
+            return CustomResult<bool>.Failure(CustomError.Conflict(ResourceErrorMessages.OPENING_HOUR_ALREADY_EXISTS));
         }
 
         var openingHour = new OpeningHour
@@ -70,7 +70,7 @@ public class CreateOpeningHourUseCase : ICreateOpeningHourUseCase
         var validator = new CreateOpeningHourValidator();
         var result = validator.Validate(request);
 
-        if(result.IsValid)
+        if(!result.IsValid)
         {
             var errorMessage = result.Errors.Select(error => error.ErrorMessage).ToList();
 

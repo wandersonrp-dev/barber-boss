@@ -239,5 +239,14 @@ namespace BarberBoss.Exception {
                 return ResourceManager.GetString("INVALID_END_DATE", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Horário já foi cadastrado.
+        /// </summary>
+        public static string OPENING_HOUR_ALREADY_EXISTS {
+            get {
+                return ResourceManager.GetString("OPENING_HOUR_ALREADY_EXISTS", resourceCulture);
+            }
+        }
     }
 }

@@ -197,4 +197,8 @@
     <value>Data de fim não pode ser menor que a data de início</value>
     <comment/>
   </data>
+  <data name="OPENING_HOUR_ALREADY_EXISTS" xml:space="preserve">
+    <value>Horário já foi cadastrado</value>
+    <comment/>
+  </data>
 </root>
