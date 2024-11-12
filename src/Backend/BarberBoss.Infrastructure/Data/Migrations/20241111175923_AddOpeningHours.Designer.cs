@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace BarberBoss.Infrastructure.Backend.BarberBoss.Infrastructure.Data.Migrations
+namespace BarberBoss.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BarberBossDbContext))]
     [Migration("20241111175923_AddOpeningHours")]

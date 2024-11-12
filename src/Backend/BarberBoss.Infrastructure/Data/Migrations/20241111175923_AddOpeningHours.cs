@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BarberBoss.Infrastructure.Backend.BarberBoss.Infrastructure.Data.Migrations
+namespace BarberBoss.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
     public partial class AddOpeningHours : Migration
