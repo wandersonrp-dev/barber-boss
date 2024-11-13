@@ -228,8 +228,7 @@ else if(_success)
             var result = await BarberShopApi.CreateBarber(_model);
 
             if (!result.IsSuccessStatusCode)
-            {                
-                
+            {                                
                 switch (result.StatusCode)
                 {
                     case HttpStatusCode.Conflict:

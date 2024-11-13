@@ -28,7 +28,7 @@ public class CreateOpeningHourValidatorTests
     {
         var validator = new CreateOpeningHourValidator();
 
-        var collection = RequestCreateOpeningHourJsonBuilder.Collection(startDate: DateTime.UtcNow.AddMinutes(-5));
+        var collection = RequestCreateOpeningHourJsonBuilder.Collection(startDate: DateTime.Now.AddMinutes(-5));
 
         var request = RequestCreateOpeningHourJsonBuilder.Build(collection);
 
@@ -39,7 +39,6 @@ public class CreateOpeningHourValidatorTests
             result.IsValid.Should().BeFalse();
             result.Errors.Should().ContainSingle().And.Contain(error => error.ErrorMessage.Equals(ResourceErrorMessages.INVALID_START_DATE));
         }
-
     }
 
     [Fact]
