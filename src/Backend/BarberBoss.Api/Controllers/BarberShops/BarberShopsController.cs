@@ -184,6 +184,5 @@ public class BarberShopsController : ControllerBase
         {
             isCreated = result.Value,
         });
-
     }
 }
