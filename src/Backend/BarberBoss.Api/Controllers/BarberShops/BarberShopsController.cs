@@ -2,6 +2,7 @@
 using BarberBoss.Application.UseCases.BarberShops.CreateOpeningHour;
 using BarberBoss.Application.UseCases.BarberShops.DoLogin;
 using BarberBoss.Application.UseCases.BarberShops.GetAllBarbers;
+using BarberBoss.Application.UseCases.BarberShops.GetOpeningHours;
 using BarberBoss.Application.UseCases.BarberShops.GetProfile;
 using BarberBoss.Application.UseCases.BarberShops.Register;
 using BarberBoss.Application.UseCases.BarberShops.Update;
@@ -185,4 +186,27 @@ public class BarberShopsController : ControllerBase
             isCreated = result.Value,
         });
     }
-}
+
+    [HttpGet]
+    [Authorize(Roles = nameof(UserType.BarberShop))]
+    [Route("barber-shops/opening-hours/{dateFilter:DateTime}")]
+    [ProducesResponseType(typeof(ResponseGetOpeningHoursJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ResponseGetOpeningHoursJson>> GetOpeningHours([FromServices] IGetOpeningHoursUseCase useCase, [FromRoute] DateTime dateFilter)
+    {
+        var result = await useCase.Execute(new RequestGetOpeningHoursJson { DateFilter = dateFilter });
+
+        if (result.IsFailure)
+        {
+            var error = result.Error;
+
+            return error.Code switch
+            {                
+                nameof(ErrorCodes.NotFound) => NotFound(new ResponseErrorJson(error.Message!)),                
+                _ => BadRequest(),
+            };
+        }
+
+        return Ok(result.Value);
+    }
+}        
