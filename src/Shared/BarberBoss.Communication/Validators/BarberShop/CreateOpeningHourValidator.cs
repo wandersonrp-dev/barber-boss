@@ -8,7 +8,7 @@ public class CreateOpeningHourValidator : AbstractValidator<RequestDateJson>
     public CreateOpeningHourValidator()
     {
         RuleFor(x => x.StartDate)            
-            .GreaterThan(DateTime.UtcNow)
+            .GreaterThan(DateTime.Now)
             .WithMessage(ResourceErrorMessages.INVALID_START_DATE);
 
         RuleFor(x => x.EndDate)
