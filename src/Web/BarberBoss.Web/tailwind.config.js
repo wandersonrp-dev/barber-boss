@@ -1,12 +1,13 @@
 module.exports = {
-    content: [
-        './**/*.html',
+    content: [        
         './**/*.razor',
         './**/*.cshtml',
         './**/*.razor.cs',
-        './**/*.js',
-        './**/*.ts',
-        "./node_modules/flowbite/**/*.js"
+        './wwwroot/**/*.js',
+        './wwwroot/**/*.ts',
+        './public/**/*.html',
+        './src/**/*.{html,razor,cshtml,razor.cs}',
+        './node_modules/flowbite/**/*.js'
     ],
     theme: {
         extend: {},

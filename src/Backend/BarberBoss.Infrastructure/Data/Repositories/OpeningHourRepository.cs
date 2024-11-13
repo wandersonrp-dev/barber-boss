@@ -51,6 +51,7 @@ public class OpeningHourRepository : IOpeningHourRepository
 
         return context.OpeningHours
             .AsNoTracking()
+            .OrderBy(e => e.StartDate)
             .Where(e => e.BarberShopId == barberShopId && e.StartDate.Date == dateFilteredUtc.Date)
             .ToList();
     }

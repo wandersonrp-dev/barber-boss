@@ -1,27 +1,27 @@
 ﻿@inject IBarberShopApi BarberShopApi
 @inject IJSRuntime JS
 
-<div class="min-h-[400px] relative overflow-x-auto shadow-md sm:rounded-lg">
+<div class="relative min-h-[400px] overflow-x-auto shadow-md sm:rounded-lg">
     <div class="flex-column flex flex-wrap items-center justify-between space-y-4 bg-white p-4 dark:bg-gray-900 md:flex-row md:space-y-0">
         <div>
             <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
-                    class="inline-flex items-center rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                    type="button">
+            class="inline-flex items-center rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+            type="button">
                 <span class="sr-only">Ações</span>
                 Ações
                 <svg class="ms-2.5 h-2.5 w-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                     viewBox="0 0 10 6">
+                viewBox="0 0 10 6">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="m1 1 4 4 4-4" />
+                    d="m1 1 4 4 4-4" />
                 </svg>
             </button>
             <div id="dropdownAction"
-                 class="z-10 hidden w-56 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700 dark:divide-gray-600">
+            class="z-10 hidden w-56 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700 dark:divide-gray-600">
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
                     <li>
                         <button href="#"
-                                class="flex w-full items-center justify-between px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                data-modal-target="drawer-timepicker" data-modal-toggle="drawer-timepicker">
+                        class="flex w-full items-center justify-between px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-target="drawer-timepicker" data-modal-toggle="drawer-timepicker">
                             <span>Criar horário</span>
                             <svg class="h-6 w-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clip-rule="evenodd" />
@@ -32,27 +32,26 @@
                 </ul>
                 <div class="py-1">
                     <button href="#"
-                            class="flex w-full items-center justify-between px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    class="flex w-full items-center justify-between px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                         <span class="text-sm">Excluir barbeiro</span>
                         <svg class="h-6 w-6 text-gray-800 dark:text-white" aria-hidden="true"
-                             xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor">
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor">
                             <path fill-rule="evenodd"
-                                  d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                  clip-rule="evenodd" />
+                            d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
+                            clip-rule="evenodd" />
                         </svg>
                     </button>
                 </div>
             </div>
         </div>
-        <div class="flex gap-3">
+        <div class="flex items-center gap-3">
             <div>
                 <svg class="h-6 w-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                     width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M5.05 3C3.291 3 2.352 5.024 3.51 6.317l5.422 6.059v4.874c0 .472.227.917.613 1.2l3.069 2.25c1.01.742 2.454.036 2.454-1.2v-7.124l5.422-6.059C21.647 5.024 20.708 3 18.95 3H5.05Z" />
                 </svg>
             </div>
-            <InputDate @bind-Value="_dateFilter"
-                       class="cursor-pointer rounded-lg border border-gray-300 text-gray-500 placeholder:text-gray-300" />
+            <input type="date" value="@_dateFilter.ToString("yyyy-MM-dd")" class="cursor-pointer rounded-lg border border-gray-300 text-gray-500 placeholder:text-gray-300" @onchange="OnDateChanged" />
         </div>
     </div>
     <table class="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
@@ -61,7 +60,7 @@
                 <th scope="col" class="p-4">
                     <div class="flex items-center">
                         <input id="checkbox-all-search" type="checkbox"
-                               class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-blue-500 focus:ring-2 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-800">
+                        class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-blue-500 focus:ring-2 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-800">
                         <label for="checkbox-all-search" class="sr-only">checkbox</label>
                     </div>
                 </th>
@@ -77,47 +76,58 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var openingHour in _openingHours)
+            @if (_openingHours.Count > 0)
             {
-                <tr class="border-b bg-white hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-                    <td class="w-4 p-4">
-                        <div class="flex items-center">
-                            <input id="checkbox-table-search-1" type="checkbox"
-                                   class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-blue-500 focus:ring-2 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-800">
-                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                        </div>
-                    </td>
-                    <th scope="row" class="flex items-center whitespace-nowrap px-6 py-4 text-gray-900 dark:text-white">
-                        <div class="ps-3">
-                            <div class="text-base font-semibold">@openingHour.StartDate</div>
-                            <div class="font-normal text-gray-500">@openingHour.EndDate</div>
-                        </div>
-                    </th>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center">
-                            <div class="me-2 h-2.5 w-2.5 rounded-full @(openingHour.Reserved ? "bg-gray-500" : "bg-green-500")">
+                @foreach (var openingHour in _openingHours)
+                {
+                    <tr class="border-b bg-white hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+                        <td class="w-4 p-4">
+                            <div class="flex items-center">
+                                <input id="checkbox-table-search-1" type="checkbox"
+                                class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-blue-500 focus:ring-2 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-800">
+                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                             </div>
-                            @if (openingHour.Reserved)
-                            {
-                                <span>Reservado</span>
-                            }
-                            else
-                            {
-                                <span>Disponível</span>
-                            }
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Editar</a>
+                        </td>
+                        <th scope="row" class="flex items-center whitespace-nowrap px-6 py-4 text-gray-900 dark:text-white">
+                            <div class="ps-3">
+                                <div class="text-base font-semibold">@openingHour.StartDate</div>
+                                <div class="font-normal text-gray-500">@openingHour.EndDate</div>
+                            </div>
+                        </th>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <div class="me-2 h-2.5 w-2.5 rounded-full @(openingHour.Reserved ? "bg-gray-500" : "bg-green-500")">
+                                </div>
+                                @if (openingHour.Reserved)
+                                {
+                                    <span>Reservado</span>
+                                }
+                                else
+                                {
+                                    <span>Disponível</span>
+                                }
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Editar</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else 
+            {
+                <tr class="">
+                    <td class="w-full text-center" >
+                        <span class="pt-20 text-lg">Não existe horário cadastrado nesse dia</span>
                     </td>
                 </tr>
-            }           
+            }            
         </tbody>
     </table>
 </div>
 
 <div id="drawer-timepicker" tabindex="-1" aria-hidden="true"
-     class="h-[calc(100%-1rem)] fixed left-0 right-0 top-0 z-50 hidden max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
+class="h-[calc(100%-1rem)] fixed left-0 right-0 top-0 z-50 hidden max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
     <div>
         <form @onsubmit="Submit" class="max-h-[37.5rem] min-w-[31.25rem] rounded-lg bg-gray-200 px-4 py-6 @(_quantityTimeSlots > 5 ? "overflow-y-scroll" : "")">
             <div class="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-600 dark:bg-gray-700">
@@ -130,46 +140,46 @@
             {
                 <div class="mb-6 border border-gray-200">
                     <div class="flex items-center justify-around">
-                        <div class="max-w-[7rem] w-full">
+                        <div class="w-full max-w-[7rem]">
                             <label for="start-time-monday" class="sr-only">Hora de início:</label>
                             <div class="relative">
                                 <div class="pointer-events-none absolute inset-y-0 end-0 top-0 flex items-center pe-3.5">
                                     <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                                         <path fill-rule="evenodd"
-                                              d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
-                                              clip-rule="evenodd" />
+                                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                                        clip-rule="evenodd" />
                                     </svg>
                                 </div>
                                 <input @bind-value="date.StartDate" type="time" id="start-time-monday" name="start-time-monday"
-                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm leading-none text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       min="00:00" max="23:59" required />
+                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm leading-none text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                min="00:00" max="23:59" required />
                             </div>
                         </div>
-                        <div class="max-w-[7rem] w-full">
+                        <div class="w-full max-w-[7rem]">
                             <label for="end-time-monday" class="sr-only">Hora final:</label>
                             <div class="relative">
                                 <div class="pointer-events-none absolute inset-y-0 end-0 top-0 flex items-center pe-3.5">
                                     <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                                         <path fill-rule="evenodd"
-                                              d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
-                                              clip-rule="evenodd" />
+                                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                                        clip-rule="evenodd" />
                                     </svg>
                                 </div>
                                 <input @bind-value="date.EndDate" type="time" id="end-time-monday" name="end-time-monday"
-                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm leading-none text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       min="00:00" max="23:59" required />
+                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm leading-none text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                min="00:00" max="23:59" required />
                             </div>
                         </div>
                         <div>
                             <button type="button" @onclick="() => DeleteInterval(date)"
-                                    class="inline-flex items-center rounded-lg p-1.5 text-center text-sm font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-200 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-gray-100">
+                            class="inline-flex items-center rounded-lg p-1.5 text-center text-sm font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-200 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-gray-100">
                                 <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                     height="24" fill="currentColor" viewBox="0 0 24 24">
+                                height="24" fill="currentColor" viewBox="0 0 24 24">
                                     <path fill-rule="evenodd"
-                                          d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                          clip-rule="evenodd" />
+                                    d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
+                                    clip-rule="evenodd" />
                                 </svg>
                                 <span class="sr-only">Delete</span>
                             </button>
@@ -179,23 +189,23 @@
             }
 
             <button type="button"
-                    class="mb-4 inline-flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:z-10 focus:ring-4 focus:ring-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:focus:ring-gray-700 dark:hover:text-white dark:hover:bg-gray-700"
-                    @onclick="AddInterval">
+            class="mb-4 inline-flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:z-10 focus:ring-4 focus:ring-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:focus:ring-gray-700 dark:hover:text-white dark:hover:bg-gray-700"
+            @onclick="AddInterval">
                 <svg class="me-1 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                     fill="none" viewBox="0 0 24 24">
+                fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M5 12h14m-7 7V5" />
+                    d="M5 12h14m-7 7V5" />
                 </svg>
                 Adicionar intervalo
             </button>
             <div class="grid-cols-2 bottom-4 left-0 mt-2 grid w-full gap-4">
                 <button type="button" data-drawer-hide="drawer-timepicker" data-modal-toggle="drawer-timepicker" aria-controls="drawer-timepicker"
-                        class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:z-10 focus:ring-4 focus:ring-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:focus:ring-gray-700 dark:hover:text-white dark:hover:bg-gray-700">
+                class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:z-10 focus:ring-4 focus:ring-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:focus:ring-gray-700 dark:hover:text-white dark:hover:bg-gray-700">
                     Fechar
                 </button>
                 <button type="submit"
-                        class="inline-flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    @if(_isLoading)
+                class="inline-flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    @if (_isLoading)
                     {
                         <Spinner />
                         <span class="ml-2">Salvar todos</span>
@@ -203,7 +213,7 @@
                     else
                     {
                         <span>Salvar todos</span>
-                    }                    
+                    }
                 </button>
             </div>
         </form>
@@ -215,9 +225,9 @@
     <ErrorToast Messages="_errorMessages" />
 }
 
-@if(_success)
+@if (_success)
 {
-    <SuccessToast Message="Horário(s) adicionado(s) com sucesso!"/>
+    <SuccessToast Message="Horário(s) adicionado(s) com sucesso!" />
 }
 
 @code {
@@ -236,13 +246,15 @@
         {
             _dates.Add(new RequestDateJson());
         }
+
+        await GetOpeningHoursFiltered();
     }
 
     private async Task Submit()
     {
         _isLoading = true;
 
-        @foreach(var date in _dates)
+        @foreach (var date in _dates)
         {
             date.StartDate = CombineDateAndTime(_dateFilter, date.StartDate);
             date.EndDate = CombineDateAndTime(_dateFilter, date.EndDate);
@@ -269,19 +281,22 @@
         try
         {
             var result = await BarberShopApi.CreateOpeningHours(new RequestCreateOpeningHourJson
-            {
-                OpeningHours = _dates.Select(openingHour => new RequestDateJson
                 {
-                    StartDate = CombineDateAndTime(_dateFilter, openingHour.StartDate),
-                    EndDate = CombineDateAndTime(_dateFilter, openingHour.EndDate),
-                    Reserved = openingHour.Reserved,
-                }).ToList()
-            });
+                    OpeningHours = _dates.Select(openingHour => new RequestDateJson
+                    {
+                        StartDate = CombineDateAndTime(_dateFilter, openingHour.StartDate),
+                        EndDate = CombineDateAndTime(_dateFilter, openingHour.EndDate),
+                        Reserved = openingHour.Reserved,
+                    }).ToList()
+                });
 
-            if(result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
                 _success = true;
-                _isLoading = false;                
+                _isLoading = false;
+
+                await GetOpeningHoursFiltered();
+
                 StateHasChanged();
                 await Task.Delay(TimeSpan.FromSeconds(3));
             }
@@ -293,7 +308,28 @@
         finally
         {
             _isLoading = false;
-            _success = false;            
+            _success = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task GetOpeningHoursFiltered()
+    {
+        var date = _dateFilter.ToDateTime(time: new TimeOnly(0, 0));
+        var dateString = date.ToString("yyyy-MM-ddTHH:mm:ss");
+
+        try
+        {
+            var result = await BarberShopApi.GetOpeningHours(dateString);
+
+            if (result.IsSuccessStatusCode)
+            {
+                _openingHours = result.Content!.OpeningHours;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error => {ex.Message}");
         }
     }
 
@@ -312,12 +348,23 @@
 
     private DateTime CombineDateAndTime(DateOnly date, DateTime time)
     {
-        var combinedDateTime = new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second); 
+        var combinedDateTime = new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second);
         return DateTime.SpecifyKind(combinedDateTime, DateTimeKind.Utc);
     }
 
     private async Task CloseModal()
     {
-        await JS.InvokeVoidAsync("closeModal", "drawer-timepicker");        
+        await JS.InvokeVoidAsync("closeModal", "drawer-timepicker");
+    }
+
+    private async Task OnDateChanged(Microsoft.AspNetCore.Components.ChangeEventArgs e)
+    {
+        if (DateOnly.TryParse(e.Value?.ToString(), out var selectedDate))
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+            _dateFilter = selectedDate;
+            await GetOpeningHoursFiltered();
+        }
     }
 }
