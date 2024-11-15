@@ -45,7 +45,7 @@ public class OpeningHourRepository : IOpeningHourRepository
 
     public async Task<List<OpeningHour>> GetByFilteredDate(Guid barberShopId, DateTime dateFiltered)
     {
-        var dateFilteredUtc = dateFiltered.ToUniversalTime();
+        var dateFilteredUtc = dateFiltered.ToUniversalTime().AddHours(-3);
 
         using var context = await _contextFactory.CreateDbContextAsync();
 

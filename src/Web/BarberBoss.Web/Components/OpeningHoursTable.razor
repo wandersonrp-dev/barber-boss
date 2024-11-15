@@ -1,7 +1,7 @@
 ﻿@inject IBarberShopApi BarberShopApi
 @inject IJSRuntime JS
 
-<div class="relative min-h-[400px] overflow-x-auto shadow-md sm:rounded-lg">
+<div class="min-h-[400px] relative overflow-x-auto shadow-md sm:rounded-lg">
     <div class="flex-column flex flex-wrap items-center justify-between space-y-4 bg-white p-4 dark:bg-gray-900 md:flex-row md:space-y-0">
         <div>
             <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
@@ -26,7 +26,6 @@
                             <svg class="h-6 w-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clip-rule="evenodd" />
                             </svg>
-
                         </button>
                     </li>
                 </ul>
@@ -140,7 +139,7 @@ class="h-[calc(100%-1rem)] fixed left-0 right-0 top-0 z-50 hidden max-h-full w-f
             {
                 <div class="mb-6 border border-gray-200">
                     <div class="flex items-center justify-around">
-                        <div class="w-full max-w-[7rem]">
+                        <div class="max-w-[7rem] w-full">
                             <label for="start-time-monday" class="sr-only">Hora de início:</label>
                             <div class="relative">
                                 <div class="pointer-events-none absolute inset-y-0 end-0 top-0 flex items-center pe-3.5">
@@ -156,7 +155,7 @@ class="h-[calc(100%-1rem)] fixed left-0 right-0 top-0 z-50 hidden max-h-full w-f
                                 min="00:00" max="23:59" required />
                             </div>
                         </div>
-                        <div class="w-full max-w-[7rem]">
+                        <div class="max-w-[7rem] w-full">
                             <label for="end-time-monday" class="sr-only">Hora final:</label>
                             <div class="relative">
                                 <div class="pointer-events-none absolute inset-y-0 end-0 top-0 flex items-center pe-3.5">

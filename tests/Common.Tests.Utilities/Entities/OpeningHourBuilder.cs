@@ -24,4 +24,13 @@ public class OpeningHourBuilder
 
         return openingHours;
     }
+
+    public static OpeningHour Build(Guid barberShopId, DateTime? startDate = null)
+    {
+        return new Faker<OpeningHour>()
+            .RuleFor(oh => oh.StartDate, faker => startDate is not null ? startDate : faker.Date.Future())
+            .RuleFor(oh => oh.EndDate, (faker, oh) => faker.Date.Future(refDate: oh.StartDate))
+            .RuleFor(oh => oh.Reserved, faker => faker.Random.Bool())
+            .RuleFor(oh => oh.BarberShopId, _ => barberShopId);
+    }
 }
