@@ -133,6 +133,15 @@ namespace BarberBoss.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível deletar um horário de dias passados.
+        /// </summary>
+        public static string INVALID_OPENING_HOUR_TO_DELETE {
+            get {
+                return ResourceManager.GetString("INVALID_OPENING_HOUR_TO_DELETE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A data de início não pode ser menor que a data atual.
         /// </summary>
         public static string INVALID_START_DATE {

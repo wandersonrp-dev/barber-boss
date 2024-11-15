@@ -1,11 +1,12 @@
 ﻿using BarberBoss.Application.UseCases.Barbers.DoLogin;
 using BarberBoss.Application.UseCases.Barbers.GetProfile;
 using BarberBoss.Application.UseCases.Barbers.Update;
-using BarberBoss.Application.UseCases.BarberShops;
 using BarberBoss.Application.UseCases.BarberShops.CreateBarber;
 using BarberBoss.Application.UseCases.BarberShops.CreateOpeningHour;
+using BarberBoss.Application.UseCases.BarberShops.DeleteOpeningHour;
 using BarberBoss.Application.UseCases.BarberShops.DoLogin;
 using BarberBoss.Application.UseCases.BarberShops.GetAllBarbers;
+using BarberBoss.Application.UseCases.BarberShops.GetOpeningHourById;
 using BarberBoss.Application.UseCases.BarberShops.GetOpeningHours;
 using BarberBoss.Application.UseCases.BarberShops.GetProfile;
 using BarberBoss.Application.UseCases.BarberShops.Register;
@@ -37,7 +38,8 @@ public static class DependecyInjectionExtensions
             .AddScoped<IUpdateBarberUseCase, UpdateBarberUseCase>()
             .AddScoped<ICreateOpeningHourUseCase, CreateOpeningHourUseCase>()
             .AddScoped<IGetOpeningHoursUseCase, GetOpeningHoursUseCase>()
-            .AddScoped<IGetOpeningHourByIdUseCase, GetOpeningHourByIdUseCase>();
+            .AddScoped<IGetOpeningHourByIdUseCase, GetOpeningHourByIdUseCase>()
+            .AddScoped<IDeleteOpeningHourUseCase, DeleteOpeningHourUseCase>();
     }
 
     private static void AddPasswordHasher(IServiceCollection services)

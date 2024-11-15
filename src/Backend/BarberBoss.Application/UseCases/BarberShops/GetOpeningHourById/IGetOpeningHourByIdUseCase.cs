@@ -1,7 +1,7 @@
 ﻿using BarberBoss.Communication.Responses.OpeningHour;
 using BarberBoss.Exception.ExceptionsBase;
 
-namespace BarberBoss.Application.UseCases.BarberShops;
+namespace BarberBoss.Application.UseCases.BarberShops.GetOpeningHourById;
 
 public interface IGetOpeningHourByIdUseCase
 {

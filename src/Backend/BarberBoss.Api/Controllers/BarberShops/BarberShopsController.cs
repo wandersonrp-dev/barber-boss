@@ -1,8 +1,9 @@
-﻿using BarberBoss.Application.UseCases.BarberShops;
-using BarberBoss.Application.UseCases.BarberShops.CreateBarber;
+﻿using BarberBoss.Application.UseCases.BarberShops.CreateBarber;
 using BarberBoss.Application.UseCases.BarberShops.CreateOpeningHour;
+using BarberBoss.Application.UseCases.BarberShops.DeleteOpeningHour;
 using BarberBoss.Application.UseCases.BarberShops.DoLogin;
 using BarberBoss.Application.UseCases.BarberShops.GetAllBarbers;
+using BarberBoss.Application.UseCases.BarberShops.GetOpeningHourById;
 using BarberBoss.Application.UseCases.BarberShops.GetOpeningHours;
 using BarberBoss.Application.UseCases.BarberShops.GetProfile;
 using BarberBoss.Application.UseCases.BarberShops.Register;
@@ -233,5 +234,32 @@ public class BarberShopsController : ControllerBase
         }
 
         return Ok(result.Value);
+    }
+
+    [HttpDelete]
+    [Authorize(Roles = nameof(UserType.BarberShop))]
+    [Route("barber-shops/opening-hours/{id:Guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ResponseOpeningHourJson>> DeleteOpeningHour(
+        [FromServices] IDeleteOpeningHourUseCase useCase, 
+        [FromRoute] Guid id)
+    {
+        var result = await useCase.Execute(id);
+
+        if (result.IsFailure)
+        {
+            var error = result.Error;
+
+            return error.Code switch
+            {
+                nameof(ErrorCodes.NotFound) => NotFound(new ResponseErrorJson(error.Message!)),
+                nameof(ErrorCodes.ErrorOnValidation) => BadRequest (new ResponseErrorJson(error.Message!)),
+                nameof(ErrorCodes.InternalServerError) => new ObjectResult(new ResponseErrorJson(error.Message!)),
+                _ => BadRequest(),
+            };
+        }
+
+        return NoContent();
     }
 }        

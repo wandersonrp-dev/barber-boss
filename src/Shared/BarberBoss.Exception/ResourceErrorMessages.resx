@@ -183,4 +183,7 @@
   <data name="OPENING_HOUR_NOT_FOUND" xml:space="preserve">
     <value>Horário não encontrado</value>
   </data>
+  <data name="INVALID_OPENING_HOUR_TO_DELETE" xml:space="preserve">
+    <value>Não é possível deletar um horário de dias passados</value>
+  </data>
 </root>

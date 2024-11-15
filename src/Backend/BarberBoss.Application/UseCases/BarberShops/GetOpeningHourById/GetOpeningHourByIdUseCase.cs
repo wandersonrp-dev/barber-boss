@@ -5,7 +5,7 @@ using BarberBoss.Exception;
 using BarberBoss.Exception.ExceptionsBase;
 using Microsoft.Extensions.Logging;
 
-namespace BarberBoss.Application.UseCases.BarberShops;
+namespace BarberBoss.Application.UseCases.BarberShops.GetOpeningHourById;
 public class GetOpeningHourByIdUseCase : IGetOpeningHourByIdUseCase
 {
     private readonly IOpeningHourRepository _openingHourRepository;
@@ -25,7 +25,7 @@ public class GetOpeningHourByIdUseCase : IGetOpeningHourByIdUseCase
 
         var openingHour = await _openingHourRepository.GetByIdAsync(id, loggedUser!.Id);
 
-        if(openingHour is null)
+        if (openingHour is null)
         {
             _logger.LogError(message: nameof(ErrorCodes.NotFound), args: [ResourceErrorMessages.OPENING_HOUR_NOT_FOUND]);
             return CustomResult<ResponseOpeningHourJson>.Failure(CustomError.NotFound(ResourceErrorMessages.OPENING_HOUR_NOT_FOUND));
@@ -38,6 +38,6 @@ public class GetOpeningHourByIdUseCase : IGetOpeningHourByIdUseCase
             StartDate = openingHour.StartDate,
             EndDate = openingHour.EndDate,
             Reserved = openingHour.Reserved
-        });        
+        });
     }
 }

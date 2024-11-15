@@ -30,6 +30,17 @@ public class OpeningHourRepository : IOpeningHourRepository
         await context.SaveChangesAsync();
     }
 
+    public async Task<bool> DeleteAsync(Guid id, Guid barberShopId)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+
+        var rows = await context.OpeningHours
+            .Where(e => e.Id == id && e.BarberShopId == barberShopId)
+            .ExecuteDeleteAsync();
+
+        return rows > 0;        
+    }
+
     public async Task<bool> ExistsByStartAndEndDate(DateTime startDate, DateTime endDate, Guid barberShopId)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
@@ -48,11 +59,11 @@ public class OpeningHourRepository : IOpeningHourRepository
 
         using var context = await _contextFactory.CreateDbContextAsync();
 
-        return context.OpeningHours
+        return await context.OpeningHours
             .AsNoTracking()
             .OrderBy(e => e.StartDate)
             .Where(e => e.BarberShopId == barberShopId && e.StartDate.Date == dateFilteredUtc.Date)
-            .ToList();
+            .ToListAsync();
     }
 
     public async Task<OpeningHour?> GetByIdAsync(Guid id, Guid barberShopId)
