@@ -17,4 +17,8 @@
     <ProjectReference Include="..\BarberBoss.Domain\BarberBoss.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\BarberShops\GetOpeningHourById\" />
+  </ItemGroup>
+
 </Project>

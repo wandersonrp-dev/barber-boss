@@ -1,7 +1,6 @@
 ﻿using BarberBoss.Domain.Entities;
 using BarberBoss.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace BarberBoss.Infrastructure.Data.Repositories;
 public class OpeningHourRepository : IOpeningHourRepository
@@ -54,5 +53,14 @@ public class OpeningHourRepository : IOpeningHourRepository
             .OrderBy(e => e.StartDate)
             .Where(e => e.BarberShopId == barberShopId && e.StartDate.Date == dateFilteredUtc.Date)
             .ToList();
+    }
+
+    public async Task<OpeningHour?> GetByIdAsync(Guid id, Guid barberShopId)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+
+        return await context.OpeningHours
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == id && e.BarberShopId == barberShopId);
     }
 }
