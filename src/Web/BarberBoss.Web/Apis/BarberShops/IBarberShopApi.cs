@@ -26,6 +26,6 @@ public interface IBarberShopApi
     [Post("/api/barber-shops/opening-hours")]
     Task<IApiResponse<ResponseGetAllBarbersJson>> CreateOpeningHours(RequestCreateOpeningHourJson request);
 
-    [Get("/api/barber-shops/opening-hours/{dateFilter}")]
-    Task<IApiResponse<ResponseGetOpeningHoursJson>> GetOpeningHours(string dateFilter);
+    [Get("/api/barber-shops/opening-hours")]
+    Task<IApiResponse<ResponseGetOpeningHoursJson>> GetOpeningHours([Query] string dateFilter);
 }

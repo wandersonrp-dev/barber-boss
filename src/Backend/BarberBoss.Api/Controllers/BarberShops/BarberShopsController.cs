@@ -1,4 +1,5 @@
-﻿using BarberBoss.Application.UseCases.BarberShops.CreateBarber;
+﻿using BarberBoss.Application.UseCases.BarberShops;
+using BarberBoss.Application.UseCases.BarberShops.CreateBarber;
 using BarberBoss.Application.UseCases.BarberShops.CreateOpeningHour;
 using BarberBoss.Application.UseCases.BarberShops.DoLogin;
 using BarberBoss.Application.UseCases.BarberShops.GetAllBarbers;
@@ -9,6 +10,7 @@ using BarberBoss.Application.UseCases.BarberShops.Update;
 using BarberBoss.Communication.Requests.BarberShop;
 using BarberBoss.Communication.Responses;
 using BarberBoss.Communication.Responses.BarberShop;
+using BarberBoss.Communication.Responses.OpeningHour;
 using BarberBoss.Domain.Enums;
 using BarberBoss.Exception.ExceptionsBase;
 using Microsoft.AspNetCore.Authorization;
@@ -189,10 +191,10 @@ public class BarberShopsController : ControllerBase
 
     [HttpGet]
     [Authorize(Roles = nameof(UserType.BarberShop))]
-    [Route("barber-shops/opening-hours/{dateFilter:DateTime}")]
+    [Route("barber-shops/opening-hours")]
     [ProducesResponseType(typeof(ResponseGetOpeningHoursJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ResponseGetOpeningHoursJson>> GetOpeningHours([FromServices] IGetOpeningHoursUseCase useCase, [FromRoute] DateTime dateFilter)
+    public async Task<ActionResult<ResponseGetOpeningHoursJson>> GetOpeningHours([FromServices] IGetOpeningHoursUseCase useCase, [FromQuery] DateTime dateFilter)
     {
         var result = await useCase.Execute(new RequestGetOpeningHoursJson { DateFilter = dateFilter });
 
@@ -203,6 +205,29 @@ public class BarberShopsController : ControllerBase
             return error.Code switch
             {                
                 nameof(ErrorCodes.NotFound) => NotFound(new ResponseErrorJson(error.Message!)),                
+                _ => BadRequest(),
+            };
+        }
+
+        return Ok(result.Value);
+    }
+
+    [HttpGet]
+    [Authorize(Roles = nameof(UserType.BarberShop))]
+    [Route("barber-shops/opening-hours/{id:Guid}")]
+    [ProducesResponseType(typeof(ResponseOpeningHourJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ResponseOpeningHourJson>> GetOpeningHourById([FromServices] IGetOpeningHourByIdUseCase useCase, [FromRoute] Guid id)
+    {
+        var result = await useCase.Execute(id);
+
+        if (result.IsFailure)
+        {
+            var error = result.Error;
+
+            return error.Code switch
+            {
+                nameof(ErrorCodes.NotFound) => NotFound(new ResponseErrorJson(error.Message!)),
                 _ => BadRequest(),
             };
         }

@@ -7,4 +7,5 @@ public interface IOpeningHourRepository
     Task AddAsync(OpeningHour openingHour);
     Task AddManyAsync(List<OpeningHour> openingHours);
     Task<List<OpeningHour>> GetByFilteredDate(Guid barberShopId, DateTime dateFiltered);
+    Task<OpeningHour?> GetByIdAsync(Guid id, Guid barberShopId);
 }

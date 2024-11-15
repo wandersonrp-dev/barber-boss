@@ -45,7 +45,7 @@ public class GetOpeningHoursTests : BarberBossClassFixture
 
         await PostAsync(METHOD, request, token);
 
-        var url = $"{METHOD}/{dateString}";
+        var url = $"{METHOD}/?dateFilter={dateString}";
 
         var result = await GetAsync(url, token);
 
