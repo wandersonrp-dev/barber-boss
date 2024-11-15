@@ -18,5 +18,10 @@ public class OpeningHourRepositoryBuilder
         _repository.Setup(repository => repository.ExistsByStartAndEndDate(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<Guid>())).ReturnsAsync(exists);
     }    
 
+    public void GetByFilteredDate(List<OpeningHour> openingHours)
+    {
+        _repository.Setup(repository => repository.GetByFilteredDate(It.IsAny<Guid>(), It.IsAny<DateTime>())).ReturnsAsync(openingHours);
+    }
+
     public IOpeningHourRepository Build() => _repository.Object;
 }

@@ -10,8 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace WebApi.Tests;
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
-    private BarberShop _barberShop = new();    
-    private Barber _barber = new();    
+    private BarberShop _barberShop = default!;    
+    private Barber _barber = default!;
+    private OpeningHour _openingHour = default!; 
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {        
@@ -35,8 +36,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     }
     
     public BarberShop GetBarberShop() => _barberShop;
-
     public Barber GetBarber() => _barber;
+    public OpeningHour GetOpeningHour() => _openingHour;
 
     private void StartDatabase(IDbContextFactory<BarberBossDbContext> contextFactory, IPasswordHasher<User> passwordHasher)
     {
@@ -60,6 +61,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
         context.SaveChanges();
 
+        //CreateOpeningHour(context, barberShop);
+
         _barber.Password = barberPaasswordAux;
         _barberShop.Password = passwordAux;
     }
@@ -80,6 +83,17 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
     //    _barberShop.Password = passwordAux;
     //}
+
+    private void CreateOpeningHour(BarberBossDbContext context, BarberShop barberShop)
+    {        
+        var openingHour = OpeningHourBuilder.Build(barberShopId: barberShop.Id, DateTime.Now);
+
+        _openingHour = openingHour;
+
+        context.OpeningHours.Add(openingHour);
+
+        context.SaveChanges();
+    }
 
     private string CreateBarber(IPasswordHasher<User> passwordHasher)
     {
